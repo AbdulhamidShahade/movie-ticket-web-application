@@ -10,6 +10,6 @@
         public int? NumCode { get; set; }
         public int? PhoneCode { get; set; }
         public string? PictureUrl { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateOnly CreatedAt { get; set; }
     }
 }
