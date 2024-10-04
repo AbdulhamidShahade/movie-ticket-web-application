@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Models;
 
 namespace MovieTicket.Web.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -15,6 +16,9 @@ namespace MovieTicket.Web.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Producer> Producers { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public DbSet<Country> Countries { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -78,6 +82,20 @@ namespace MovieTicket.Web.Data
                 .WithMany(od => od.OrderDetails)
                 .HasForeignKey(fk => fk.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Country>()
+                .HasMany(p => p.Producers)
+                .WithOne(c => c.Country)
+                .HasForeignKey(fk => fk.CountryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Country>()
+                .HasMany(a => a.Actors)
+                .WithOne(c => c.Country)
+                .HasForeignKey(fk => fk.CountryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
     }
 }
