@@ -2,5 +2,6 @@
 {
     public class DeleteMovieVM : UpdateMovieVM
     {
+        public DateOnly CreatedAt { get; set; }
     }
 }
