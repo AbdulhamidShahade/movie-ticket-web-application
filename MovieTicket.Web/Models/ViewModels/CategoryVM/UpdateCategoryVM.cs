@@ -1,8 +1,6 @@
 ﻿namespace MovieTicket.Web.Models.ViewModels.CategoryVM
 {
-    public class UpdateCategoryVM
+    public class UpdateCategoryVM : ReadCategoryVM
     {
-        public string Description { get; set; }
-        public string PictureUrl { get; set; }
     }
 }

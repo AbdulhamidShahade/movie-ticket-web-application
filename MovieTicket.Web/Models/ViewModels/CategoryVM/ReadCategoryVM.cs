@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public string PictureUrl { get; set; }
+        public DateOnly CreatedAt { get; set; }
     }
 }
