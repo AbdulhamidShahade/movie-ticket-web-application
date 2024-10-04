@@ -7,12 +7,12 @@ using MovieTicket.Web.Repositories.IRepository;
 
 namespace MovieTicketWebApplication.Controllers
 {
-    public class ProducerController : Controller
+    public class ProducersController : Controller
     {
         private readonly IProducerRepository _producerRepository;
         private readonly IMapper _mapper;
 
-        public ProducerController(IProducerRepository producerRepository, IMapper mapper)
+        public ProducersController(IProducerRepository producerRepository, IMapper mapper)
         {
             _mapper = mapper;
             _producerRepository = producerRepository;

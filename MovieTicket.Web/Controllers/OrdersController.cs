@@ -7,14 +7,14 @@ using System.Security.Claims;
 
 namespace MovieTicketWebApplication.Controllers
 {
-    public class OrderController : Controller
+    public class OrdersController : Controller
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMovieRepository _movieRepository;
         private readonly ShoppingCart _shoppingCart;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrderController(IOrderRepository orderRepository, IMovieRepository movieRepository, ShoppingCart shoppingCart)
+        public OrdersController(IOrderRepository orderRepository, IMovieRepository movieRepository, ShoppingCart shoppingCart)
         {
             _orderRepository = orderRepository;
             _movieRepository = movieRepository;
