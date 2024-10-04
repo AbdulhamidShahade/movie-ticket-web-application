@@ -6,5 +6,7 @@
         {
             return this.FirstName + " " + this.LastName;
         }
+
+        public List<MovieProducer> MoviesProducers { get; set; }    
     }
 }

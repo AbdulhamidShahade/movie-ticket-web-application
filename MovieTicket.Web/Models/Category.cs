@@ -7,5 +7,7 @@ namespace MovieTicket.Web.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string PictureUrl { get; set; }
+
+        public List<MovieCategory> MoviesCategories { get; set; }
     }
 }

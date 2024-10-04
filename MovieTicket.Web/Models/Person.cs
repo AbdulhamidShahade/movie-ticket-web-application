@@ -9,6 +9,9 @@ namespace MovieTicket.Web.Models
         public DateTime BirthDate { get; set; }
         public string Bio { get; set; }
         public string PictureUrl { get; set; }
+
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
         public abstract string FullName();
     }
 }

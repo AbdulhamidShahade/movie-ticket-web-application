@@ -12,5 +12,7 @@ namespace MovieTicket.Web.Models
 
         public int OrderId { get; set; }
         public Order Order { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
