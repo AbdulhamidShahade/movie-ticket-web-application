@@ -1,6 +1,4 @@
-﻿
-
-using MovieTicket.Models.ViewModels.AuthenticationVM;
+﻿using MovieTicket.Models.ViewModels.AuthenticationVM;
 
 namespace MovieTicket.Web.Repositories.IRepository
 {
