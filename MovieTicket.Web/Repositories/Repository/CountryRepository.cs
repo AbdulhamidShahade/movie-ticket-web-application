@@ -1,5 +1,4 @@
-﻿
-
+﻿using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Data;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Repositories.Base;
@@ -13,6 +12,24 @@ namespace MovieTicket.Web.Repositories.Repository
         public CountryRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<Country> GetCountryByActorIdAsync(int actorId)
+        {
+            var country = await _context.Actors.Where(a => a.Id == actorId)
+                .Select(c => c.Country)
+                .FirstOrDefaultAsync();
+
+            return country;
+        }
+
+        public async Task<Country> GetCountryByProducerIdAsync(int producerId)
+        {
+            var country = await _context.Producers.Where(p => p.Id == producerId)
+                .Select(c => c.Country)
+                .FirstOrDefaultAsync();
+
+            return country;
         }
     }
 

@@ -17,11 +17,13 @@ namespace MovieTicket.Web.Repositories.Repository
             _context = context;
         }
 
-        public async Task<List<Movie>> GetMoviesByCinemaId(int cinemaId)
+        public async Task<Cinema> GetCinemaByMovieIdAsync(int movieId)
         {
-            var movies = await _context.Movies.Where(ci => ci.CinemaId == cinemaId).ToListAsync();
+            var cinema = await _context.Movies.Where(m => m.Id == movieId)
+                .Select(c => c.Cinema)
+                .FirstOrDefaultAsync();
 
-            return movies;
+            return cinema;
         }
     }
 }

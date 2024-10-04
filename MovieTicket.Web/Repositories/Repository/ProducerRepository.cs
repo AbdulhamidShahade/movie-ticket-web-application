@@ -1,25 +1,35 @@
-﻿
-//using MovieTicket.Web.Data;
-//using MovieTicket.Web.Models;
-//using MovieTicket.Web.Repositories.Base;
-//using MovieTicket.Web.Repositories.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieTicket.Web.Data;
+using MovieTicket.Web.Models;
+using MovieTicket.Web.Repositories.Base;
+using MovieTicket.Web.Repositories.IRepository;
 
-//namespace MovieTicket.Web.Repositories.Repository
-//{
-//    public class ProducerRepository : BaseRepository<Producer>, IProducerRepository
-//    {
-//        private readonly ApplicationDbContext _context;
+namespace MovieTicket.Web.Repositories.Repository
+{
+    public class ProducerRepository : BaseRepository<Producer>, IProducerRepository
+    {
+        private readonly ApplicationDbContext _context;
 
-//        public ProducerRepository(ApplicationDbContext context) : base(context)
-//        {
-//            _context = context;
-//        }
+        public ProducerRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
+        }
 
-//        public async Task<List<Movie>> GetMoviesByProducerId(int producerId)
-//        {
-//            var movies = await _context.MoviesProducers.Where(p => p.ProducerId == producerId).Select(m => m.Movie).ToListAsync();
+        public async Task<List<Producer>> GetProducersByCountryIdAsync(int countryId)
+        {
+            var producers = await _context.Producers.Where(c => c.CountryId == countryId)
+                .ToListAsync();
 
-//            return movies;
-//        }
-//    }
-//}
+            return producers;
+        }
+
+        public async Task<List<Producer>> GetProducersByMovieIdAsync(int movieId)
+        {
+            var producers = await _context.MoviesProducers.Where(m => m.MovieId == movieId)
+                .Select(p => p.Producer)
+                .ToListAsync();
+
+            return producers;
+        }
+    }
+}

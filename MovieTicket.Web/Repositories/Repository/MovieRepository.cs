@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Data;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Models.ViewModels.MovieVM;
@@ -16,34 +14,6 @@ namespace MovieTicket.Web.Repositories.Repository
         public MovieRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
-        }
-
-        public async Task<List<Actor>> GetActorsByMovieId(int movieId)
-        {
-            var actors = await _context.MoviesActors.Where(m => m.MovieId == movieId).Select(a => a.Actor).ToListAsync();
-
-            return actors;
-        }
-
-        public async Task<List<Category>> GetCategoriesByMovieId(int movieId)
-        {
-            var categories = await _context.MoviesCategories.Where(m => m.MovieId == movieId).Select(c => c.Category).ToListAsync();
-
-            return categories;
-        }
-
-        public async Task<List<Producer>> GetProducersByMovieId(int movieId)
-        {
-            var producers = await _context.MoviesProducers.Where(m => m.MovieId == movieId).Select(p => p.Producer).ToListAsync();
-
-            return producers;
-        }
-
-        public async Task<Cinema> GetCinemaByMovieId(int id)
-        {
-            var cinema = await _context.Cinemas.Where(c => c.Id == id).FirstOrDefaultAsync();
-
-            return cinema;
         }
 
         public async Task<MovieDropdownListsVM> GetMovieDropDownLists()
@@ -154,9 +124,45 @@ namespace MovieTicket.Web.Repositories.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<List<Movie>> GetMoviesByActorIdAsync(int actorId)
+        {
+            var movies = await _context.MoviesActors.Where(a => a.ActorId == actorId)
+                .Select(m => m.Movie)
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public List<Movie> GetMoviesByActorId(int actorId)
+        {
+            var movies = _context.MoviesActors.Where(a => a.ActorId == actorId)
+                .Select(m => m.Movie)
+                .ToList();
+
+            return movies;
+        }
+
+        public async Task<List<Movie>> GetMoviesByCategoryIdAsync(int categoryId)
+        {
+            var movies = await _context.MoviesCategories.Where(c => c.CategoryId == categoryId)
+                .Select(m => m.Movie)
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public List<Movie> GetMoviesByCategoryId(int categoryId)
+        {
+            var movies = _context.MoviesCategories.Where(c => c.CategoryId == categoryId)
+                .Select(m => m.Movie)
+                .ToList();
+
+            return movies;
+        }
+
         public async Task<List<Movie>> GetMoviesByProducerIdAsync(int producerId)
         {
-            List<Movie> movies = await _context.MoviesProducers.Where(p => p.ProducerId == producerId)
+            var movies = await _context.MoviesProducers.Where(p => p.ProducerId == producerId)
                 .Select(m => m.Movie)
                 .ToListAsync();
 
@@ -165,7 +171,7 @@ namespace MovieTicket.Web.Repositories.Repository
 
         public List<Movie> GetMoviesByProducerId(int producerId)
         {
-            List<Movie> movies = _context.MoviesProducers.Where(p => p.ProducerId == producerId)
+            var movies = _context.MoviesProducers.Where(p => p.ProducerId == producerId)
                 .Select(m => m.Movie)
                 .ToList();
 
@@ -174,28 +180,34 @@ namespace MovieTicket.Web.Repositories.Repository
 
         public int GetMoviesCountByActorId(int actorId)
         {
-            var movies = GetMoviesByActorId(actorId);
+            var moviesCount = _context.MoviesActors.Where(a => a.ActorId == actorId)
+                .Count();
 
-            return movies.Count;
+            return moviesCount;
         }
 
-        public List<Movie> GetMoviesByActorId(int actorId)
+        public async Task<int> GetMoviesCountByActorIdAsync(int actorId)
         {
-            List<Movie> movies = _context.MoviesActors.Where(a => a.ActorId == actorId)
-                .Select(m => m.Movie)
-                .ToList();
+            var moviesCount = await _context.MoviesActors.Where(a => a.ActorId == actorId)
+                .CountAsync();
 
-            return movies;
+            return moviesCount;
         }
 
-        public List<Movie> GetMoviesByCategoryId(int categoryId)
+        public int GetMoviesCountByProducerId(int producerId)
         {
-            List<Movie> movies = _context.MoviesCategories.Where(c => c.CategoryId == categoryId)
-                .Select(m => m.Movie)
-                .ToList();
+            var moviesCount = _context.MoviesProducers.Where(p => p.ProducerId == producerId)
+                .Count();
 
-            return movies;
+            return moviesCount;
         }
 
+        public async Task<int> GetMoviesCountByProducerIdAsync(int producerId)
+        {
+            var moviesCount = await _context.MoviesProducers.Where(p => p.ProducerId == producerId)
+                .CountAsync();
+
+            return moviesCount; 
+        }
     }
 }

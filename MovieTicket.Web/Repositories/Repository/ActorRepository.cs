@@ -23,11 +23,13 @@ namespace MovieTicket.Web.Repositories.Repository
             return actors;
         }
 
-        public async Task<List<Movie>> GetMoviesByActorId(int actorId)
+        public async Task<List<Actor>> GetActorsByMovieIdAsync(int movieId)
         {
-            List<Movie> movies = await _context.MoviesActors.Where(a => a.ActorId == actorId).Select(m => m.Movie).ToListAsync();
+            var actors = await _context.MoviesActors.Where(m => m.MovieId == movieId)
+                .Select(a => a.Actor)
+                .ToListAsync();
 
-            return movies;
+            return actors;
         }
     }
 }
