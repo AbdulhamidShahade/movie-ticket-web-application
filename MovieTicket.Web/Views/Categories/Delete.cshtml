@@ -1,0 +1,88 @@
+﻿@model MovieTicket.Web.Models.ViewModels.CategoryVM.DeleteCategoryVM
+
+<head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="@Url.Content("~/css/Categories/delete.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <form asp-action="Delete">
+        <br />
+        <div class="container border p-3">
+            <h1 class="text-primary">Delete Category</h1>
+            <hr />
+
+            <input hidden asp-for="Id" />
+
+            <div class="row">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group text-center">
+                    <img id="CategoryPicturePreview" class="border-info rounded-circle" style="max-width: 150px" />
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="Name" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bx-category'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Name" readonly />
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+
+                <div class="col-2">
+                    <label asp-for="Description" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bx-edit'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Description" readonly />
+                    </div>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="PictureUrl" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend" style="padding-right:4px;">
+                            <span class="input-group-text">
+                                <i class='bx bx-image-add'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="PictureUrl" readonly />
+                    </div>
+                    <span asp-validation-for="PictureUrl" class="text-danger"></span>
+                </div>
+
+
+                <div class="col-5 offset-2">
+                    <input type="submit" value="Delete" class="btn btn-danger form-control" />
+                </div>
+
+                <div class="col-5">
+                    <a asp-controller="Categories" asp-action="UserIndex" class="btn btn-outline-primary">Back To Categories</a>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    <script src="js/Categories/delete.js"></script>
+</body>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
