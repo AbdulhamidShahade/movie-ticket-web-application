@@ -1,0 +1,31 @@
+﻿@model List<MovieTicket.Web.Models.ViewModels.CategoryVM.ReadCategoryVM>
+
+<head>
+    <link href="@Url.Content("~/css/Categories/userIndex.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-title" style="padding-bottom:10px;">
+            <h1>Cinemas</h1>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var category in Model)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id"><img src="@category.PictureUrl" class="card-img-top" alt="@category.Name"></a>
+                        <div class="card-header">
+                            <h5 class="text-center">@category.Name</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">@category.Description</li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="js/Categories/userIndex.js"></script>
+</body>
+
