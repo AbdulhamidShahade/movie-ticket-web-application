@@ -1,0 +1,143 @@
+﻿@model MovieTicket.Web.Models.ViewModels.CountryVM.CreateCountryVM
+
+<head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="@Url.Content("~/css/Countries/create.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <form asp-action="Create">
+        <br />
+        <div class="container border p-3">
+            <h1 class="text-primary">Create Country</h1>
+            <hr />
+            <div class="row">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group text-center">
+                    <img id="CategoryPicturePreview" class="border-info rounded-circle" style="max-width: 150px" />
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="Name" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bxs-contact'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Name" />
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="Iso" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bxs-contact'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Iso" />
+                    </div>
+                    <span asp-validation-for="Iso" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="Nicename" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bxs-contact'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Nicename" />
+                    </div>
+                    <span asp-validation-for="Nicename" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="Iso3" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bxs-contact'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Iso3" />
+                    </div>
+                    <span asp-validation-for="Iso3" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="NumCode" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bxs-contact'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="NumCode" />
+                    </div>
+                    <span asp-validation-for="NumCode" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="PhoneCode" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bx-edit'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="PhoneCode" />
+                    </div>
+                    <span asp-validation-for="PhoneCode" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="PictureUrl" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bx-image-add'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="PictureUrl" />
+                    </div>
+                    <span asp-validation-for="PictureUrl" class="text-danger"></span>
+                </div>
+
+                <div class="col-5 offset-2">
+                    <input type="submit" value="Create" class="btn btn-success form-control" />
+                </div>
+
+                <div class="col-5">
+                    <a asp-controller="Countries" asp-action="UserIndex" class="btn btn-outline-primary">Back To Countries</a>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+    <script src="~/js/Countries/create.js"></script>
+</body>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
