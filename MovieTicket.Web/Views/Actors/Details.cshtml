@@ -1,0 +1,51 @@
+﻿@model MovieTicket.Web.Models.ViewModels.ActorVM.ReadActorVM
+@using MovieTicketWebApplication.Repositories.Queries.ADONet.ActorQueries
+@inject ActorMoviesDataProvider actorsQuery;
+
+@* @{
+    ViewData["Title"] = "Movie details";
+} *@
+
+<head>
+    <link href="@Url.Content("~/css/Actors/details.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container actor-details-container border">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="actor-card">
+                    <div class="actor-card-header">
+                        <h5 class="title">@Model.FirstName @Model.LastName</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="@Model.PictureUrl" alt="@Model.FirstName">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="actor-card-body">
+                                <p class="card-text">@Model.Bio</p>
+                                <p class="card-text  ">
+                                    <b>Movies: </b>
+                                    <div class="movie-list d-flex">
+                                        @foreach (var movie in actorsQuery.GetMoviesByActorId(@Model.Id, 5))
+                                        {
+                                            <div class="movie-profile">
+                                                <img src="@movie.PictureUrl" />
+                                                <a asp-controller="Actors" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a>
+                                            </div>
+                                        }
+                                    </div>
+                                </p>
+                                <p class="card-text"><b>BirthDate: </b>@Model.BirthDate.ToString("dd MMM yy")</p>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/Actors/details.js"></script>
+</body>
+
