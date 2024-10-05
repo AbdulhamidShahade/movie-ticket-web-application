@@ -1,0 +1,53 @@
+﻿@using MovieTicketWebApplication.Repositories.Queries.ADONet.CinemaQueries
+@model MovieTicket.Web.Models.ViewModels.CinemaVM.ReadCinemaVM
+
+@inject CinemaMoviesDataProvider cinemaQuery;
+
+@{
+    ViewData["Title"] = "Movie details";
+}
+
+<head>
+    <link href="@Url.Content("~/css/Cinemas/details.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container cinema-details-container border">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="movie-card">
+                    <div class="cinema-card-header">
+                        <h5 class="title">@Model.Name</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="@Model.Logo" alt="@Model.Logo">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="cinema-card-body">
+                                <p class="card-text">@Model.Description</p>
+                                <p class="card-text  ">
+                                    <b>Movies: </b>
+                                    <div class="movie-list d-flex">
+                                        @foreach (var movie in cinemaQuery.GetMoviesByCinemaId(Model.Id, 5))
+                                        {
+                                            <div class="movie-profile ">
+                                                <img src="@movie.PictureUrl" />
+                                                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a>
+                                            </div>
+                                        }
+                                    </div>
+                                </p>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/Cinemas/details.js"></script>
+</body>
+
+
+
