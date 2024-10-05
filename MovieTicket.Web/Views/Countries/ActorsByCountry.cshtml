@@ -1,0 +1,81 @@
+﻿@using MovieTicket.Web.Repositories.IRepository
+@inject ICinemaRepository cinemaRepository;
+@inject IMovieRepository movieRepository;
+@inject ICountryRepository countryRepository;
+
+@model List<MovieTicket.Web.Models.ViewModels.ActorVM.ReadActorVM>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Failed"]
+    </div>
+}
+
+<head>
+    <link href="@Url.Content("~/css/Countries/actorsByCountry.css")" rel="stylesheet" type="text/css" />
+</head>
+
+
+<body>
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <div class="popup-header">
+                <img id="actor-picture" src="" alt="" class="actor-poster">
+                <div class="popup-header-details">
+                    <h2 id="actor-name"></h2>
+                    <p id="country-name"></p>
+                </div>
+            </div>
+            <p class="actor-bio" id="actor-bio"></p>
+            <p id="actor-birth-date"></p>
+            <div class="popup-buttons">
+                <a id="actor-details" class="btn btn-primary" href="">Information</a>
+                <a id="actor-movies" class="btn btn-primary" href="">Movies</a>
+            </div>
+            <button class="close-btn" onclick="togglePopup()">Close</button>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h1 class="pb-3">Movies</h1>
+        @foreach (var actor in Model)
+        {
+            var country = countryRepository.GetAsync(i => i.Id == actor.CountryId).GetAwaiter().GetResult().Nicename;
+
+            <div class="actor-list">
+                <div class="row movie-item mb-4">
+                    <div class="col-md-1">
+                        <span class="position">@actor.Id</span>
+                    </div>
+                    <div class="col-md-1">
+                        <img src="@actor.PictureUrl"
+                             class="img-fluid imgg"
+                             alt="The Shawshank Redemption" />
+                    </div>
+                    <div class="col-md-8">
+                        <h5 class="actor-title">@actor.FirstName @actor.LastName</h5>
+                        <div class="actor-info">@country</div>
+                        <div class=" pt-2 actor-info">@await Component.InvokeAsync("CountMoviesByActor", actor.Id)</div>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-end align-items-center">
+                        <div>
+                            <a onclick="showMovieData(`@actor.FirstName`, `@actor.LastName`, `@actor.Bio`, `@actor.BirthDate`,
+                                                       `@actor.Id.ToString()`, `@actor.PictureUrl`, `@country`)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ipc-icon ipc-icon--info" viewBox="0 0 24 24" fill="currentColor" role="presentation"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script src="~/js/Countries/actorsByCountry.js"></script>
+</body>
