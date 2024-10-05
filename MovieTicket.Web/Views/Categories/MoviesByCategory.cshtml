@@ -1,0 +1,71 @@
+﻿@model List<MovieTicket.Web.Models.ViewModels.MovieVM.ReadMovieVM>
+
+<head>
+    <link href="@Url.Content("~/css/Categories/moviesByCategory.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <div class="popup-header">
+                <img id="movie-picture" src="" alt="John Wick" class="movie-poster">
+                <div class="popup-header-details">
+                    <h2 id="movie-name"></h2>
+                    <p>2014 • 1h 41min • R</p>
+                    <p>Action/Thriller</p>
+                    <div class="rating">
+                        <span class="rating-score">9.3/10</span>
+                        <span class="rating-count">(2.9M)</span>
+                        <a href="#" class="rate-link">Rate</a>
+                    </div>
+                </div>
+            </div>
+            <p class="movie-description" id="movie-descriptionn"></p>
+            <p id="movie-start-date"><strong>Start Date: </strong></p>
+            <p id="movie-end-date"><strong>End Date: </strong></p>
+            <p><strong>Stars:</strong> Keanu Reeves, Michael Nyqvist, Alfie Allen</p>
+            <div class="popup-buttons">
+                <a id="movie-details" class="btn btn-primary" href="">Information</a>
+                <button class="watchlist-btn">+ Add To Cart</button>
+            </div>
+            <button class="close-btn" onclick="togglePopup()">Close</button>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h1 class="pb-3">Movies</h1>
+        @foreach (var category in Model)
+        {
+            <div class="movie-list">
+                <div class="row movie-item mb-4">
+                    <div class="col-md-1">
+                        <span class="position">@category.Id</span>
+                    </div>
+                    <div class="col-md-1">
+                        <img src="@category.PictureUrl"
+                             class="img-fluid imgg"
+                             alt="The Shawshank Redemption" />
+                    </div>
+                    <div class="col-md-8">
+                        <h5 class="movie-title">@category.Name</h5>
+                        <div class="movie-info">@await Component.InvokeAsync("TotalMovie", 24)</div>
+                        <div class="movie-rating">
+                            <span class="rating">9.3</span>
+                            <span class="rating-count">(2.9M)</span>
+                            <a href="#" class="rate-link">Rate</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-end align-items-center">
+                        <div>
+                            <a onclick="showMovieData('@category.Name', '@category.Id.ToString()', '@category.PictureUrl', '@category.Description',
+                                                       '@category.StartDate', '@category.EndDate')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ipc-icon ipc-icon--info" viewBox="0 0 24 24" fill="currentColor" role="presentation"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script src="js/Categories/moviesByCategory.js"></script>
+</body>
