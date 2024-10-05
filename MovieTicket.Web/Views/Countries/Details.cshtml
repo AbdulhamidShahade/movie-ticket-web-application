@@ -1,0 +1,53 @@
+﻿@model MovieTicket.Web.Models.ViewModels.CountryVM.ReadCountryVM
+
+
+@{
+    ViewData["Title"] = "Movie details";
+}
+
+<head>
+    <link href="@Url.Content("~/css/Countries/details.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container country-details-container border">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="country-card">
+                    <div class="country-card-header">
+                        <h5 class="title">@Model.Name</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="@Model.PictureUrl" alt="@Model.PictureUrl">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="country-card-body">
+                                <p style="margin-bottom:20px;" class="card-text"><strong>Iso: </strong>@Model.Iso</p>
+                                <p style="margin-bottom:20px;" class="card-text"><strong>Nice name: </strong>@Model.Nicename</p>
+                                <p style="margin-bottom:20px;" class="card-text"><strong>Iso3: </strong>@Model.Iso3</p>
+                                <p style="margin-bottom:20px;" class="card-text"><strong>Num Code: </strong>@Model.NumCode</p>
+                                <p style="margin-bottom:20px;" class="card-text"><strong>Phone Code: </strong>@Model.PhoneCode</p>
+                                <p style="margin-bottom:20px;" class="card-text"><strong>Created At: </strong>@Model.CreatedAt</p>
+                                <p class="card-text  ">
+                                    <b>Movies: </b>
+                                    <hr style="margin-top:-10px;" />
+                                    <div class="actor-list d-flex">
+                                        @* @foreach (var actor in moviesDataProvider.GetMoviesByCategoryId(@Model.Id, 4))
+                                        {
+                                            <div class="actor-profile">
+                                                <img src="@actor.PictureUrl" />
+                                                <a asp-controller="Movies" asp-action="Details" asp-route-id="@actor.Id">@actor.Name</a>
+                                            </div>
+                                        } *@
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/Countries/details.js"></script>
+</body>
