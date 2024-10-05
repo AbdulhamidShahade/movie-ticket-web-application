@@ -1,0 +1,51 @@
+﻿@using MovieTicketWebApplication.Repositories.Queries.ADONet.CategoryQueries
+@model MovieTicket.Web.Models.ViewModels.CategoryVM.ReadCategoryVM
+
+@inject CategoryMoviesDataProvider categoryQuery;
+
+@{
+    ViewData["Title"] = "Movie details";
+}
+
+<head>
+    <link href="@Url.Content("~/css/Categories/details.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container category-details-container border">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="category-card">
+                    <div class="movie-card-header">
+                        <h5 class="title">@Model.Name</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="@Model.PictureUrl" alt="@Model.PictureUrl">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="category-card-body">
+                                <p class="card-text">@Model.Description</p>
+                                <p class="card-text  ">
+                                    <b>Movies: </b>
+                                    <div class="movie-list d-flex">
+                                        @foreach (var category in categoryQuery.GetMoviesByCategoryId(@Model.Id, 4))
+                                        {
+                                            <div class="movie-profile">
+                                                <img src="@category.PictureUrl" />
+                                                <a asp-controller="Movies" asp-action="Details" asp-route-id="@category.Id">@category.Name</a>
+                                            </div>
+                                        }
+                                    </div>
+                                </p>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/Categories/details.js"></script>
+</body>
+
