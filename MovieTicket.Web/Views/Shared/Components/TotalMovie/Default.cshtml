@@ -1,0 +1,27 @@
+﻿@model int;
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .video-info {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+            .video-info .icon {
+                margin-left: 5px;
+            }
+    </style>
+</head>
+
+
+@if(Model >= 0)
+{
+    <body>
+        <div class="video-info">
+            <span>@Model</span>
+            <i class="fas fa-video icon"></i>
+        </div>
+    </body>
+}
