@@ -1,0 +1,53 @@
+﻿@using MovieTicketWebApplication.Repositories.Queries.ADONet.ProducerQueries
+
+
+@model MovieTicket.Web.Models.ViewModels.ProducerVM.ReadProducerVM
+
+@inject ProducerMoviesDataProvider moviesQuery;
+
+@* @{
+    ViewData["Title"] = "Movie details";
+} *@
+
+<head>
+    <link href="@Url.Content("~/css/Producers/details.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container producer-details-container border">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="producer-card">
+                    <div class="producer-card-header">
+                        <h5 class="title">@Model.FirstName</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="@Model.PictureUrl" alt="@Model.FirstName">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="producer-card-body">
+                                <p class="card-text">@Model.Bio</p>
+                                <p class="card-text  ">
+                                    <b>Movies: </b>
+                                    <div class="movie-list d-flex">
+                                        @foreach (var movie in moviesQuery.GetMoviesByProducerId(@Model.Id, 3))
+                                        {
+                                            <div class="movie-profile">
+                                                <img src="@movie.PictureUrl" />
+                                                <a asp-controller="Actors" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a>
+                                            </div>
+                                        }
+                                    </div>
+                                </p>
+                                <p class="card-text"><b>BirthDate: </b>@Model.BirthDate.ToString("dd MMM yy")</p>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/Producers/details.js"></script>
+</body>
