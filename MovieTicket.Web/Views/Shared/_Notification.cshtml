@@ -1,0 +1,33 @@
+﻿<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+
+
+@if (TempData["success"].Equals("not"))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="deleteNotification">
+        Category deleted bitch.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if(TempData["success"] != null){
+    <div class="alert alert-info alert-dismissible fade show" role="alert" id="deleteNotification">
+        @TempData["success"].ToString()
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<script>
+    setTimeout(function () {
+        var notification = document.getElementById('deleteNotification');
+        if (notification) {
+            notification.classList.remove('show');
+            notification.classList.add('fade');
+        }
+    }, 5000);
+</script>
