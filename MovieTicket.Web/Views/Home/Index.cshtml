@@ -1,8 +1,100 @@
-﻿@{
+﻿@using MovieTicket.Web.Repositories.IRepository
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@inject IMovieRepository movieRepository;
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Failed"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<head>
+    <style>
+        .input-group-text {
+            background-color: #007bff; 
+            color: white;
+        }
+
+        .form-control {
+            border: 1px solid #007bff;
+        }
+
+        .btn-primary {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+            .btn-primary:hover {
+                background-color: #004085;
+                border-color: #004085;
+            }
+
+    </style>
+</head>
+
+<div class="text-center mb-5">
+    <h1 class="display-4">Welcome to MovieLand24</h1>
+    <p>Your one-stop solution for buying tickets to the latest movies!</p>
+</div>
+
+<div id="upcomingMoviesCarousel" class="carousel slide mb-5" style="margin-left:170px;" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @if (movieRepository.GetAllAsync().Result.Any())
+        {
+            var movies = await movieRepository.GetAllAsync();
+            var isFirst = true;
+
+            @foreach (var movie in movies)
+            {
+                <div class="carousel-item @(isFirst ? "active" : "")">
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.PictureUrl" class="d-block w-100" alt="Movie Image" style="max-height: 700px; max-width: 800px; height: auto;"></a>
+
+                </div>
+                isFirst = false;
+            }
+        }
+        else
+        {
+            <div class="carousel-item active">
+                <img src="default-placeholder.jpg" class="d-block w-100 carousel-img">
+            </div>
+        }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#upcomingMoviesCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#upcomingMoviesCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+
+<div class="mb-5">
+    <form method="get" action="/Movies/Search">
+        <div class="input-group">
+            <span class="input-group-text" id="search-addon">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control rounded-start" placeholder="Search for a movie..." name="query" aria-label="Search" aria-describedby="search-addon">
+            <button class="btn btn-primary rounded-end" type="submit">Search</button>
+        </div>
+    </form>
 </div>
