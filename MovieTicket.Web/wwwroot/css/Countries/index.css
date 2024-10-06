@@ -1,0 +1,12 @@
+﻿.table th, .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        margin-right: 600px;
+    }
+}
