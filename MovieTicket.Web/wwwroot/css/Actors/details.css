@@ -1,0 +1,89 @@
+﻿.actor-details-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.actor-card-header h5 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.actor-card img {
+    border-radius: 10px;
+    max-width: 100%;
+    margin-bottom: 15px;
+}
+
+.actor-card-body {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.card-text b {
+    font-size: 1.1rem;
+}
+
+.movie-profile {
+    text-align: center;
+    margin: 10px;
+    transition: transform 0.2s;
+}
+
+    .movie-profile:hover {
+        transform: scale(1.05);
+    }
+
+    .movie-profile img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+    }
+
+    .movie-profile a {
+        display: block;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+.btn-custom {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.badge {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 15px;
+}
+
+.bg-success {
+    background-color: #28a745;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+}
+
+.bg-primary {
+    background-color: #007bff;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.title {
+    margin-left: 3px;
+}
