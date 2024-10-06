@@ -1,0 +1,113 @@
+﻿@model MovieTicket.Web.Models.ViewModels.MovieVM.CreateMovieVM
+
+
+@{
+    ViewData["Title"] = "Create a new movie";
+}
+
+<head>
+    <link href="@Url.Content("~/css/Movies/create.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Create a new movie</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label">Movie Name</label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="StartDate" class="control-label">Start Date</label>
+                                        <input asp-for="StartDate" type="date" class="form-control" />
+                                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="EndDate" class="control-label">End Date</label>
+                                        <input asp-for="EndDate" type="date" class="form-control" />
+                                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Price" class="control-label">Price</label>
+                                        <input asp-for="Price" type="number" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="PictureUrl" class="control-label">Image URL</label>
+                                        <input asp-for="PictureUrl" class="form-control" />
+                                        <span asp-validation-for="PictureUrl" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Rating" class="control-label">Rating</label>
+                                        <input asp-for="Rating" class="form-control" />
+                                        <span asp-validation-for="Rating" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="PublishYear" class="control-label">Publish Year</label>
+                                        <input asp-for="PublishYear" class="form-control" />
+                                        <span asp-validation-for="PublishYear" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Length" class="control-label">Length</label>
+                                        <input asp-for="Length" class="form-control" />
+                                        <span asp-validation-for="Length" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="CinemaId" class="control-label">Cinema</label>
+                                        <select asp-for="CinemaId" class="form-control" asp-items="ViewBag.Cinemas"></select>
+                                        <span asp-validation-for="CinemaId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ProducerIds" class="control-label">Producer</label>
+                                        <select asp-for="ProducerIds" class="form-control" asp-items="ViewBag.Producers" multiple></select>
+                                        <span asp-validation-for="ProducerIds" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ActorIds" class="control-label">Actors</label>
+                                        <select asp-for="ActorIds" class="form-control" asp-items="ViewBag.Actors" multiple></select>
+                                        <span asp-validation-for="ActorIds" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="CategoryIds" class="control-label">Categories</label>
+                                        <select asp-for="CategoryIds" class="form-control" asp-items="ViewBag.Categories" multiple></select>
+                                        <span asp-validation-for="ActorIds" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label asp-for="Description" class="control-label">Description</label>
+                                        <textarea asp-for="Description" class="form-control"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <img id="ImageUrlPreview" class="img-fluid mt-3" style="max-height: 200px;" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-success" />
+                                <a class="btn btn-secondary" asp-action="UserIndex">Show all</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/Movies/create.js"></script>
+</body>
