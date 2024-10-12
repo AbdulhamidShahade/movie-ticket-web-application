@@ -2,6 +2,7 @@
 
 @{
     ViewData["Navbar"] = true;
+    ViewData["Title"] = "Country List";
 }
 
 @if(TempData["Success"] != null)
@@ -37,6 +38,7 @@
                         <th>Iso3</th>
                         <th>Num Code</th>
                         <th>Phone Code</th>
+                        <th>Created At</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -52,6 +54,7 @@
                             <td>@item.Iso3</td>
                             <td>@item.NumCode</td>
                             <td>@item.PhoneCode</td>
+                            <td>@item.CreatedAt</td>
                             <td>
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm" style="margin-right:0.3rem;">Details</a>
                                 <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning btn-sm" style="margin-right:0.3rem;">Update</a>

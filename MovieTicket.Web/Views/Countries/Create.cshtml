@@ -1,5 +1,9 @@
 ﻿@model MovieTicket.Web.Models.ViewModels.CountryVM.CreateCountryVM
 
+@{
+    ViewData["Title"] = "Create Country";
+}
+
 <head>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="@Url.Content("~/css/Countries/create.css")" rel="stylesheet" type="text/css" />
@@ -15,7 +19,7 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="form-group text-center">
-                    <img id="CategoryPicturePreview" class="border-info rounded-circle" style="max-width: 150px" />
+                    <img id="CountryPicturePreview" class="border-info rounded-circle" style="max-width: 150px" />
                 </div>
 
                 <div class="col-2">
@@ -40,7 +44,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bxs-contact'></i>
+                                <i class='bx bx-world'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="Iso" />
@@ -70,7 +74,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bxs-contact'></i>
+                                <i class='bx bx-world'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="Iso3" />
@@ -85,7 +89,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bxs-contact'></i>
+                                <i class='bx bx-phone-outgoing'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="NumCode" />
@@ -100,7 +104,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-edit'></i>
+                                <i class='bx bx-phone'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="PhoneCode" />
@@ -128,7 +132,7 @@
                 </div>
 
                 <div class="col-5">
-                    <a asp-controller="Countries" asp-action="UserIndex" class="btn btn-outline-primary">Back To Countries</a>
+                    <a asp-controller="Countries" asp-action="Index" class="btn btn-outline-primary">Back To Countries</a>
                 </div>
 
             </div>

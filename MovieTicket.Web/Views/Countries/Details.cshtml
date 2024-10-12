@@ -1,8 +1,10 @@
-﻿@model MovieTicket.Web.Models.ViewModels.CountryVM.ReadCountryVM
+﻿@using MovieTicket.Web.Repositories.Queries.ADONet.ActorQueries
+@model MovieTicket.Web.Models.ViewModels.CountryVM.ReadCountryVM
 
+@inject CountryActorsDataProvider actorsQuery;
 
 @{
-    ViewData["Title"] = "Movie details";
+    ViewData["Title"] = "Country Details";
 }
 
 <head>
@@ -28,20 +30,41 @@
                                 <p style="margin-bottom:20px;" class="card-text"><strong>Iso3: </strong>@Model.Iso3</p>
                                 <p style="margin-bottom:20px;" class="card-text"><strong>Num Code: </strong>@Model.NumCode</p>
                                 <p style="margin-bottom:20px;" class="card-text"><strong>Phone Code: </strong>@Model.PhoneCode</p>
-                                <p style="margin-bottom:20px;" class="card-text"><strong>Created At: </strong>@Model.CreatedAt</p>
                                 <p class="card-text  ">
-                                    <b>Movies: </b>
-                                    <hr style="margin-top:-10px;" />
+                                    <b>Actors: </b>
+
                                     <div class="actor-list d-flex">
-                                        @* @foreach (var actor in moviesDataProvider.GetMoviesByCategoryId(@Model.Id, 4))
+                                        @foreach (var actor in actorsQuery.GetActorsByCountryId(@Model.Id, 5))
                                         {
                                             <div class="actor-profile">
                                                 <img src="@actor.PictureUrl" />
-                                                <a asp-controller="Movies" asp-action="Details" asp-route-id="@actor.Id">@actor.Name</a>
+                                                <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FirstName @actor.LastName</a>
                                             </div>
-                                        } *@
+                                        }
                                     </div>
+
+                                    <div>
+                                        <a class="toggle-collapse" data-bs-toggle="collapse" href="#actorsCollapse" role="button" aria-expanded="false" aria-controls="actorsCollapse">
+                                            <i class="bi bi-caret-down-fill"></i> Show All
+                                        </a>
+                                        <div class="collapse" id="actorsCollapse">
+                                            <div class="actor-list row mt-3">
+                                                @foreach (var actor in actorsQuery.GetActorsByCountryId(Model.Id, 100))
+                                                {
+                                                    <div class="col-6 col-md-3 col-lg-2-4 mb-4 d-flex justify-content-center">
+                                                        <div class="actor-profile text-center">
+                                                            <img class="img-fluid rounded-circle mb-2 img-test" src="@actor.PictureUrl" alt="@actor.FirstName @actor.LastName's picture" />
+                                                            <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FirstName @actor.LastName</a>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </p>
+                                <hr />
                             </div>
                         </div>
                     </div>
