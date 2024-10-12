@@ -14,11 +14,12 @@ namespace MovieTicketWebApplication.Controllers
         private readonly ShoppingCart _shoppingCart;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(IOrderRepository orderRepository, IMovieRepository movieRepository, ShoppingCart shoppingCart)
+        public OrdersController(IOrderRepository orderRepository, IMovieRepository movieRepository, ShoppingCart shoppingCart, UserManager<ApplicationUser> userManager)
         {
             _orderRepository = orderRepository;
             _movieRepository = movieRepository;
             _shoppingCart = shoppingCart;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -49,11 +50,7 @@ namespace MovieTicketWebApplication.Controllers
 
         public async Task<IActionResult> AddItemToShoppingCart(int id)
         {
-            var item = await _movieRepository.GetAsync(x => x.Id == id,
-                                                                        c => c.Cinema,
-                                                                        ma => ma.MoviesActors.Select(a => a.Actor),
-                                                                        mc => mc.MoviesCategories.Select(c => c.Category),
-                                                                        mp => mp.MoviesProducers.Select(p => p.Producer));
+            var item = await _movieRepository.GetAsync(x => x.Id == id);
 
             if (item != null)
             {
@@ -86,7 +83,7 @@ namespace MovieTicketWebApplication.Controllers
             await _orderRepository.StoreOrderAsync(items, userId, userEmailAddress);
             await _shoppingCart.ClearShoppingCartAsync();
 
-            return View("OrderCompleted");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

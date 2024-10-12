@@ -78,12 +78,12 @@ namespace MovieTicketWebApplication.Controllers
         {
             var categoryModel = await _categoryRepository.GetAsync(x => x.Id == id);
 
-            if (categoryModel != null)
+            if (categoryModel == null)
             {
                 return View("InternalServerError");
             }
 
-            var categoryViewModel = _mapper.Map<ReadCategoryVM>(categoryModel);
+            var categoryViewModel = _mapper.Map<UpdateCategoryVM>(categoryModel);
 
             return View(categoryViewModel);
         }
@@ -112,12 +112,12 @@ namespace MovieTicketWebApplication.Controllers
         {
             var categoryModel = await _categoryRepository.GetAsync(x => x.Id == id);
 
-            if (categoryModel != null)
+            if (categoryModel == null)
             {
                 return View("InternalServerError");
             }
 
-            var categoryViewModel = _mapper.Map<ReadCategoryVM>(categoryModel);
+            var categoryViewModel = _mapper.Map<DeleteCategoryVM>(categoryModel);
 
             return View(categoryViewModel);
 

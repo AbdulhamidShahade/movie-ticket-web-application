@@ -36,7 +36,7 @@ namespace MovieTicketWebApplication.Controllers
             }
 
             NotificationHalper.SetNotification(this, "Success", "Login successfully!");
-            return RedirectToAction("UserIndex", "Categories");
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -66,7 +66,7 @@ namespace MovieTicketWebApplication.Controllers
         {
             await _authenticationRepository.LogoutAsync();
             NotificationHalper.SetNotification(this, "Success", "Logout successfully!");
-            return RedirectToAction("UserIndex", "Categories");
+            return RedirectToAction("Index", "Home");
         }
 
         //public IActionResult AccessDenied(string returnUrl)

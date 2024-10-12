@@ -23,7 +23,7 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var moviesModel = await _movieRepository.GetAllAsync();
+            var moviesModel = await _movieRepository.GetMoviesAsync();
 
             var moviesViewModel = _mapper.Map<List<ReadMovieVM>>(moviesModel);
 
@@ -32,14 +32,13 @@ namespace MovieTicketWebApplication.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetMovieById(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var movie = _movieRepository.GetAsync(null, c => c.Cinema,
-                                                         ca => ca.MoviesCategories.Select(c => c.Category),
-                                                         p => p.MoviesProducers.Select(p => p.Producer),
-                                                         a => a.MoviesActors.Select(a => a.Actor));
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
 
-            return View(movie);
+            var movieViewModel = _mapper.Map<ReadMovieVM>(movie);
+
+            return View(movieViewModel);
         }
 
 
@@ -86,11 +85,26 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var movieModel = await _movieRepository.GetAsync(x => x.Id == id,
-                                                                        c => c.Cinema,
-                                                                        ma => ma.MoviesActors.Select(a => a.Actor),
-                                                                        mc => mc.MoviesCategories.Select(c => c.Category),
-                                                                        mp => mp.MoviesProducers.Select(p => p.Producer));
+            var movieModel = await _movieRepository.GetMovieByIdAsync(id);
+
+            var response = new UpdateMovieVM
+            {
+                Id = movieModel.Id,
+                Name = movieModel.Name,
+                Description = movieModel.Description,
+                Price = movieModel.Price,
+                PictureUrl = movieModel.PictureUrl,
+                Length = movieModel.Length,
+                PublishYear = movieModel.PublishYear,
+                Rating = movieModel.Rating,
+                StartDate = movieModel.StartDate,
+                EndDate = movieModel.EndDate,
+                CinemaId = movieModel.CinemaId,
+                ActorIds = movieModel.MoviesActors.Where(m => m.MovieId == movieModel.Id).Select(ai => ai.ActorId).ToList(),
+                CategoryIds = movieModel.MoviesCategories.Where(m => m.MovieId == movieModel.Id).Select(ci => ci.CategoryId).ToList(),
+                ProducerIds = movieModel.MoviesProducers.Where(m => m.MovieId == movieModel.Id).Select(pi => pi.ProducerId).ToList(),
+                CreatedAt = movieModel.CreatedAt,
+            };
 
             var movieDropdownLists = await _movieRepository.GetMovieDropDownLists();
 
@@ -108,9 +122,9 @@ namespace MovieTicketWebApplication.Controllers
 
             ViewBag.Categories = new SelectList(movieDropdownLists.Categories, "Id", "Name");
 
-            var movieViewModel = _mapper.Map<UpdateMovieVM>(movieModel);
+            ViewBag.Cinemas = new SelectList(movieDropdownLists.Cinemas, "Id", "Name");
 
-            return View(movieViewModel);
+            return View(response);
         }
 
 
@@ -133,11 +147,26 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var movieModel = await _movieRepository.GetAsync(x => x.Id == id,
-                                                                        c => c.Cinema,
-                                                                        ma => ma.MoviesActors.Select(a => a.Actor),
-                                                                        mc => mc.MoviesCategories.Select(c => c.Category),
-                                                                        mp => mp.MoviesProducers.Select(p => p.Producer));
+            var movieModel = await _movieRepository.GetMovieByIdAsync(id);
+
+            var response = new DeleteMovieVM
+            {
+                Id = movieModel.Id,
+                Name = movieModel.Name,
+                Description = movieModel.Description,
+                Price = movieModel.Price,
+                PictureUrl = movieModel.PictureUrl,
+                Length = movieModel.Length,
+                PublishYear = movieModel.PublishYear,
+                Rating = movieModel.Rating,
+                StartDate = movieModel.StartDate,
+                EndDate = movieModel.EndDate,
+                CinemaId = movieModel.CinemaId,
+                ActorIds = movieModel.MoviesActors.Where(m => m.MovieId == movieModel.Id).Select(ai => ai.ActorId).ToList(),
+                CategoryIds = movieModel.MoviesCategories.Where(m => m.MovieId == movieModel.Id).Select(ci => ci.CategoryId).ToList(),
+                ProducerIds = movieModel.MoviesProducers.Where(m => m.MovieId == movieModel.Id).Select(pi => pi.ProducerId).ToList(),
+                CreatedAt = movieModel.CreatedAt
+            };
 
 
             var movieDropdownLists = await _movieRepository.GetMovieDropDownLists();
@@ -156,9 +185,9 @@ namespace MovieTicketWebApplication.Controllers
 
             ViewBag.Categories = new SelectList(movieDropdownLists.Categories, "Id", "Name");
 
-            var movieViewModel = _mapper.Map<DeleteMovieVM>(movieModel);
+            ViewBag.Cinemas = new SelectList(movieDropdownLists.Cinemas, "Id", "Name");
 
-            return View(movieViewModel);
+            return View(response);
         }
 
 
@@ -181,9 +210,9 @@ namespace MovieTicketWebApplication.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> MoviesByActor(int actorId)
+        public async Task<IActionResult> MoviesByActor(int id)
         {
-            var moviesModel = await _movieRepository.GetMoviesByActorIdAsync(actorId);
+            var moviesModel = await _movieRepository.GetMoviesByActorIdAsync(id);
 
             if (moviesModel == null)
             {
@@ -213,9 +242,9 @@ namespace MovieTicketWebApplication.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> MoviesByProducer(int producerId)
+        public async Task<IActionResult> MoviesByProducer(int id)
         {
-            var moviesModel = await _movieRepository.GetMoviesByProducerIdAsync(producerId);
+            var moviesModel = await _movieRepository.GetMoviesByProducerIdAsync(id);
 
             if(moviesModel == null)
             {
@@ -232,7 +261,7 @@ namespace MovieTicketWebApplication.Controllers
         {
             var moviesModel = await _movieRepository.GetAllAsync();
 
-            if(moviesModel != null)
+            if(moviesModel == null)
             {
                 return View("InternalServerError");
             }
@@ -240,6 +269,21 @@ namespace MovieTicketWebApplication.Controllers
             var moviesViewModel = _mapper.Map<List<ReadMovieVM>>(moviesModel);
 
             return View(moviesViewModel);
+        }
+
+
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _movieRepository.GetAllAsync();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var filteredResultNew = allMovies.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) || string.Equals(n.Description, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+                return View("UserIndex", _mapper.Map<List<ReadMovieVM>>(filteredResultNew));
+            }
+
+            return RedirectToAction(nameof(UserIndex));
         }
     }
 }

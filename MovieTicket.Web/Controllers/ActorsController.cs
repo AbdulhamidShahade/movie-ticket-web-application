@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MovieTicket.Web.Helpers;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Models.ViewModels.ActorVM;
@@ -10,12 +11,14 @@ namespace MovieTicketWebApplication.Controllers
     public class ActorsController : Controller
     {
         private readonly IActorRepository _actorRepository;
+        private readonly ICountryRepository _countryRepository;
         private readonly IMapper _mapper;
 
-        public ActorsController(IActorRepository actorRepository, IMapper mapper)
+        public ActorsController(IActorRepository actorRepository, IMapper mapper, ICountryRepository countryRepository)
         {
             _mapper = mapper;
             _actorRepository = actorRepository;
+            _countryRepository = countryRepository;
         }
 
 
@@ -54,6 +57,7 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
             return View(new CreateActorVM());
         }
 
@@ -81,7 +85,9 @@ namespace MovieTicketWebApplication.Controllers
         {
             var actor = await _actorRepository.GetAsync(x => x.Id == id);
 
-            if(actor == null)
+            ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
+
+            if (actor == null)
             {
                 return View("InternalServerError");
             }
@@ -115,12 +121,14 @@ namespace MovieTicketWebApplication.Controllers
         {
             var actorModel = await _actorRepository.GetAsync(x => x.Id == id);
 
-            if(actorModel == null)
+            ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
+
+            if (actorModel == null)
             {
                 return View("InternalServerError");
             }
 
-            var viewModel = _mapper.Map<ReadActorVM>(actorModel);
+            var viewModel = _mapper.Map<DeleteActorVM>(actorModel);
 
             return View(viewModel);
         }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MovieTicket.Web.Helpers;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Models.ViewModels.ProducerVM;
@@ -10,12 +11,14 @@ namespace MovieTicketWebApplication.Controllers
     public class ProducersController : Controller
     {
         private readonly IProducerRepository _producerRepository;
+        private readonly ICountryRepository _countryRepository;
         private readonly IMapper _mapper;
 
-        public ProducersController(IProducerRepository producerRepository, IMapper mapper)
+        public ProducersController(IProducerRepository producerRepository, IMapper mapper, ICountryRepository countryRepository)
         {
             _mapper = mapper;
             _producerRepository = producerRepository;
+            _countryRepository = countryRepository;
         }
 
         [HttpGet]
@@ -52,6 +55,7 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
             return View(new CreateProducerVM());
         }
 
@@ -77,9 +81,12 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
+
+            ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
+
             var producerModel = await _producerRepository.GetAsync(x => x.Id == id);
 
-            if (producerModel != null)
+            if (producerModel == null)
             {
                 return View("InternalServerError");
             }
@@ -111,6 +118,9 @@ namespace MovieTicketWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete (int id)
         {
+
+            ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
+
             var producerModel = await _producerRepository.GetAsync(x => x.Id == id);
 
             if(producerModel == null)
