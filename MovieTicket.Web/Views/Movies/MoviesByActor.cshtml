@@ -1,0 +1,98 @@
+﻿@using MovieTicket.Web.Repositories.IRepository
+
+@inject ICategoryRepository categoryRepository;
+
+@model List<MovieTicket.Web.Models.ViewModels.MovieVM.ReadMovieVM>
+
+@inject ICinemaRepository cinemaRepository;
+
+@{
+    ViewData["Title"] = "Movies By Actor";
+}
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Failed"]
+    </div>
+}
+
+<head>
+    <link href="@Url.Content("~/css/Movies/userIndex.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <div class="popup-header">
+                <img id="movie-picture" src="" alt="John Wick" class="movie-poster">
+                <div class="popup-header-details">
+                    <h2 id="movie-name"></h2>
+                    <p id="movie-publish-year-length"></p>
+                    <p id="movie-category"></p>
+                    <div class="rating">
+                        <span id="movie-rating" class="rating-score"></span>
+                        <a href="#" class="rate-link">Rate</a>
+                    </div>
+                </div>
+            </div>
+            <p class="movie-description" id="movie-bio"></p>
+            <p id="movie-start-date"></p>
+            <p id="movie-end-date"></p>
+            <p id="cinema-name"></p>
+            <div class="popup-buttons">
+                <a id="movie-details" class="btn-custom btn-view-details" href="">
+                    <i class="bi bi-eye-fill"></i> View Details
+                </a>
+                <a id="shopping-cart" class="btn-custom btn-add-to-cart" href="">
+
+                </a>
+            </div>
+            <button class="close-btn" onclick="togglePopup()">Close</button>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h1 class="pb-3">Movies</h1>
+        @foreach (var movie in Model)
+        {
+            var categories = categoryRepository.GetCategoriesByMovieIdAsync(movie.Id).GetAwaiter().GetResult().Select(n => n.Name);
+            <div class="movie-list">
+                <div class="row movie-item mb-4">
+                    <div class="col-md-1">
+                        <span class="position">@movie.Id</span>
+                    </div>
+                    <div class="col-md-1">
+                        <img src="@movie.PictureUrl"
+                             class="img-fluid imgg"
+                             alt="The Shawshank Redemption" />
+                    </div>
+                    <div class="col-md-8">
+                        <h5 class="movie-title">@movie.Name</h5>
+                        <p>@string.Join("/", categories)</p>
+                        <div class="movie-rating">
+                            <span class="rating">@movie.Rating</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-end align-items-center">
+                        <div>
+                            <a onclick="showMovieData(`@movie.Name`, `@movie.Description`, `@movie.StartDate`, `@movie.EndDate`, `@movie.Id.ToString()`, `@movie.PictureUrl`,
+                                                         `@movie.Price`, `@cinemaRepository.GetCinemaByMovieIdAsync(@movie.Id).GetAwaiter().GetResult().Name`, `@movie.PublishYear`,
+                                                         `@movie.Length`, `@string.Join("/",categories)`, `@movie.Rating`)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ipc-icon ipc-icon--info" viewBox="0 0 24 24" fill="currentColor" role="presentation"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>  </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script src="~/js/Movies/userIndex.js"></script>
+</body>
