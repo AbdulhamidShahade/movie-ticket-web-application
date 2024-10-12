@@ -18,18 +18,17 @@ namespace MovieTicket.Web.Repositories.Base
 
         public async Task<bool> CreateAsync(T entity)
         {
-            EntityEntry toAdd = await _context.Set<T>().AddAsync(entity);
-            toAdd.State = EntityState.Added;
-
+            entity.CreatedAt = DateTime.UtcNow;
+            var toAdd = await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
             return toAdd != null;
         }
 
         public async Task<bool> DeleteAsync(T entity)
         {
             EntityEntry toDelete = _context.Set<T>().Remove(entity);
-
             toDelete.State = EntityState.Deleted;
-
+            await _context.SaveChangesAsync();
             return toDelete != null;
         }
 
@@ -74,9 +73,8 @@ namespace MovieTicket.Web.Repositories.Base
         public async Task<bool> UpdateAsync(T entity)
         {
             EntityEntry toUpdate = _context.Set<T>().Update(entity);
-
             toUpdate.State = EntityState.Modified;
-
+            await _context.SaveChangesAsync();
             return toUpdate != null;
         }
     }
