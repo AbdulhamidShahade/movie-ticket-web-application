@@ -5,13 +5,9 @@
         public int Id { get; set; }
         public DateTime CreatedAt
         {
-            get
-            {
-                return DateTime.UtcNow;
-            }
-            set { }
+            get; set;
         }
-        public DateTime UpdatedAt
+        public DateTime? UpdatedAt
         {
             get
             {
