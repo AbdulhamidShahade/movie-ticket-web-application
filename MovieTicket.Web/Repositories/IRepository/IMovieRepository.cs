@@ -9,6 +9,9 @@ namespace MovieTicket.Web.Repositories.IRepository
         Task<MovieDropdownListsVM> GetMovieDropDownLists();
         Task<bool> CreateMovieAsync(CreateMovieVM createMovieVM);
         Task<bool> UpdateMovieAsync(UpdateMovieVM updateMovieVM);
+
+        Task<List<Movie>> GetMoviesAsync();
+        Task<Movie> GetMovieByIdAsync(int id);
         
         Task<List<Movie>> GetMoviesByActorIdAsync(int actorId);
         List<Movie> GetMoviesByActorId(int actorId);
