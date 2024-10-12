@@ -1,7 +1,21 @@
 ﻿@model List<MovieTicket.Web.Models.Order>
 
 @{
-    ViewData["Title"] = "All orders";
+    ViewData["Title"] = "Order List";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Failed"]
+    </div>
 }
 
 <head>
