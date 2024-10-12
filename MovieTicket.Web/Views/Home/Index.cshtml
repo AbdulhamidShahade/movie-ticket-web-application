@@ -88,12 +88,12 @@
 
 
 <div class="mb-5">
-    <form method="get" action="/Movies/Search">
+    <form method="get" action="/Movies/Filter">
         <div class="input-group">
             <span class="input-group-text" id="search-addon">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="text" class="form-control rounded-start" placeholder="Search for a movie..." name="query" aria-label="Search" aria-describedby="search-addon">
+            <input name="searchString" type="text" class="form-control rounded-start" placeholder="Search for a movie..." aria-label="Search" aria-describedby="search-addon">
             <button class="btn btn-primary rounded-end" type="submit">Search</button>
         </div>
     </form>
