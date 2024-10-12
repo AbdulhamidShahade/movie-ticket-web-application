@@ -2,6 +2,6 @@
 {
     public static class Global
     {
-        public static string ConnectionString = "Server=.;Database=movie-ticket-web-application;Trusted_Connection=True;";
+        public static string ConnectionString = "Server=.;Database=MovieTicketDB;Trusted_Connection=True;";
     }
 }
