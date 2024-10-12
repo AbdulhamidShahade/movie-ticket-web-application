@@ -1,8 +1,17 @@
-﻿ @model Movie
+﻿@using MovieTicket.Web.Repositories.IRepository
+@using MovieTicket.Web.Repositories.Queries.ADONet.ActorQueries
+@using MovieTicket.Web.Repositories.Queries.ADONet.CategoryQueries
+@using MovieTicket.Web.Repositories.Queries.ADONet.ProducerQueries
+@model MovieTicket.Web.Models.ViewModels.MovieVM.ReadMovieVM
 
-@* @{
-    ViewData["Title"] = "Movie details";
-} *@
+@inject MovieActorsDataProvider actorsQuery;
+@inject MovieCategoriesDataProvider categoriesQuery;
+@inject MovieProducersDataProvider producersQuery;
+@inject ICinemaRepository cinemaRepository;
+
+@{
+    ViewData["Title"] = "Movie Details";
+}
 
 <head>
     <link href="@Url.Content("~/css/Movies/details.css")" rel="stylesheet" type="text/css" />
@@ -19,40 +28,120 @@
                     <div class="row">
                         <div class="col-md-4">
                             <img src="@Model.PictureUrl" alt="@Model.Name">
+                            <div class="mt-1 d-flex justify-content-between">
+                                <p>• @Model.PublishYear</p>
+                                <p>• @(Math.Floor(Model.Length / 60.0) + "h " + (@Model.Length % 60) + "m")</p>
+                                <p>• @Model.Rating</p>
+                            </div>
+
                         </div>
                         <div class="col-md-8">
                             <div class="movie-card-body">
-                                <p class="card-text">@Model.Description</p>
+                                <p class="card-text"><strong>Description: </strong>@Model.Description</p>
+
+
                                 <p class="card-text">
                                     <b>Cinema: </b>
-                                    <a asp-controller="Cinema" asp-action="Details" asp-route-id="@Model.CinemaId">
-                                        @Model.Cinema.Name
-                                    </a>
+                                    <div class="list d-flex">
+                                        <div class="profile ">
+                                            <img src="@cinemaRepository.GetAsync(c => c.Id == @Model.CinemaId).GetAwaiter().GetResult().Logo" />
+                                            <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model.CinemaId">@cinemaRepository.GetAsync(i => i.Id == Model.CinemaId).GetAwaiter().GetResult().Name</a>
+                                        </div>
+                                    </div>
                                 </p>
+
+
                                 <p class="card-text">
-                                    <b>Actors: </b>
-                                    <div class="actor-list d-flex">
-                                        @foreach (var actor in Model.MoviesProducers)
+                                    <b>Categories: </b>
+                                    <div class="list d-flex">
+                                        @foreach (var category in categoriesQuery.GetCategoriesByMovieId(@Model.Id, 5))
                                         {
-                                            <div class="actor-profile ">
-                                                <img src="@actor.Producer.PictureUrl" />
-                                                <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Producer.Id">@actor.Producer.FullName()</a>
+                                            <div class="profile">
+                                                <img src="@category.PictureUrl" />
+                                                <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a>
                                             </div>
                                         }
                                     </div>
+
+                                    <div>
+                                        <a class="toggle-collapse" data-bs-toggle="collapse" href="#categoriesCollapse" role="button" aria-expanded="false" aria-controls="categoriesCollapse">
+                                            <i class="bi bi-caret-down-fill"></i> Show All
+                                        </a>
+                                        <div class="collapse" id="categoriesCollapse">
+                                            <div class="list d-flex flex-wrap mt-2">
+                                                @foreach (var category in categoriesQuery.GetCategoriesByMovieId(@Model.Id, 100))
+                                                {
+                                                    <div class="profile">
+                                                        <img src="@category.PictureUrl" />
+                                                        <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </p>
+
                                 <p class="card-text">
-                                    <b>Actors: </b>
-                                    <div class="actor-list  d-flex">
-                                        @foreach (var actor in Model.MoviesCategories)
+                                    <b>Producers: </b>
+                                    <div class="list d-flex">
+                                        @foreach (var producer in producersQuery.GetProducersByMovieId(@Model.Id, 5))
                                         {
-                                            <div class="actor-profile">
-                                                <img src="@actor.Category.PictureUrl" />
-                                                <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.Category.Id">@actor.Category.Name</a>
+                                            <div class="profile">
+                                                <img src="@producer.PictureUrl" />
+                                                <a asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id">@producer.FirstName @producer.LastName</a>
                                             </div>
                                         }
                                     </div>
+
+                                    <div>
+                                        <a class="toggle-collapse" data-bs-toggle="collapse" href="#producersCollapse" role="button" aria-expanded="false" aria-controls="producersCollapse">
+                                            <i class="bi bi-caret-down-fill"></i> Show All
+                                        </a>
+                                        <div class="collapse" id="producersCollapse">
+                                            <div class="list d-flex flex-wrap mt-2">
+                                                @foreach (var producer in producersQuery.GetProducersByMovieId(@Model.Id, 100))
+                                                {
+                                                    <div class="profile">
+                                                        <img src="@producer.PictureUrl" />
+                                                        <a asp-controller="Producers" asp-action="Details" asp-route-id="@producer.Id">@producer.FirstName @producer.LastName</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                 </p>
+
+                                <p class="card-text">
+                                    <b>Actors: </b>
+                                    <div class="list d-flex">
+                                        @foreach (var actor in actorsQuery.GetActorsByMovieId(Model.Id, 5))
+                                        {
+                                            <div class="profile ">
+                                                <img src="@actor.PictureUrl" />
+                                                <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FirstName @actor.LastName</a>
+                                            </div>
+                                        }
+                                    </div>
+
+
+                                    <div>
+                                        <a class="toggle-collapse" data-bs-toggle="collapse" href="#actorsCollapse" role="button" aria-expanded="false" aria-controls="actorsCollapse">
+                                            <i class="bi bi-caret-down-fill"></i> Show All
+                                        </a>
+                                        <div class="collapse" id="actorsCollapse">
+                                            <div class="list d-flex flex-wrap mt-2">
+                                                @foreach (var actor in actorsQuery.GetActorsByMovieId(Model.Id, 100))
+                                                {
+                                                    <div class="profile">
+                                                        <img src="@actor.PictureUrl" />
+                                                        <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FirstName @actor.LastName</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+
                                 <p class="card-text"><b>Start Date: </b>@Model.StartDate.ToString("dd MMM yy")</p>
                                 <p class="card-text"><b>End Date: </b>@Model.EndDate.ToString("dd MMM yy")</p>
                                 <p class="card-text">
@@ -70,27 +159,16 @@
                                         <span class="badge bg-primary text-white">UPCOMING</span>
                                     }
                                 </p>
-                                <p class="card-text">
-                                    <b>Actors: </b>
-                                    <div class="actor-list d-flex">
-                                        @foreach (var actor in Model.MoviesActors)
-                                        {
-                                            <div class="actor-profile">
-                                                <img src="@actor.Actor.PictureUrl" />
-                                                <a asp-controller="Actor" asp-action="Details" asp-route-id="@actor.ActorId">Tom Hardy</a>
-                                            </div>
-                                        }
-                                    </div>
-                                </p>
+
                                 <hr />
                             </div>
                         </div>
                     </div>
                     <div class="movie-card-footer">
-                        <a class="btn btn-outline-primary btn-custom" asp-action="Index">
+                        <a class="btn btn-outline-primary btn-custom" asp-action="UserIndex">
                             Back to List
                         </a>
-                        <a class="btn btn-success btn-custom @((DateTime.Now > Model.EndDate) ? "btn-disabled" : "")"
+                        <a class="btn btn-success btn-custom @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
                            asp-controller="Orders"
                            asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
                             <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
@@ -102,4 +180,3 @@
     </div>
     <script src="~/js/Movies/details.js"></script>
 </body>
-                        

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Navbar"] = true;
+    ViewData["Title"] = "Movie List";
 }
 
 
@@ -38,6 +39,7 @@
                         <th>Publish Year</th>
                         <th>Start Date</th>
                         <th>End Date</th>
+                        <th>Created At</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -53,6 +55,7 @@
                             <td>@item.PublishYear</td>
                             <td>@item.StartDate</td>
                             <td>@item.EndDate</td>
+                            <td>@item.CreatedAt</td>
                             <td>
                                 <a asp-action="Details" asp-controller="Movies" asp-route-id="@item.Id" class="btn btn-primary btn-sm" style="margin-right:0.3rem;">Details</a>
                                 <a asp-action="Update" asp-controller="Movies" asp-route-id="@item.Id" class="btn btn-warning btn-sm" style="margin-right:0.3rem;">Update</a>
