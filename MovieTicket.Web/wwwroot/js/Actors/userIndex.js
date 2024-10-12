@@ -10,7 +10,7 @@ function showMovieData(actorFirstName, actorLastName, actorBio, actorBirthDate, 
     document.getElementById('actor-birth-date').innerHTML = "<strong>Birth Date: </strong>" + actorBirthDate;
     document.getElementById('actor-details').setAttribute('href', `/Actors/Details/${actorId}`);
     document.getElementById('actor-picture').setAttribute('src', actorPicture);
-    document.getElementById('actor-movies').setAttribute('href', `/Actors/MoviesByActor/${actorId}`);
+    document.getElementById('actor-movies').setAttribute('href', `/Movies/MoviesByActor/${actorId}`);
     document.getElementById('country-name').innerText = country;
 
     togglePopup();
