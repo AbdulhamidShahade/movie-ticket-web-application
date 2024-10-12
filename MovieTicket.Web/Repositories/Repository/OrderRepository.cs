@@ -38,15 +38,17 @@ namespace MovieTicket.Web.Repositories.Repository
             };
 
             await _context.Orders.AddAsync(order); //after adding will id be rendering from database.
+            await _context.SaveChangesAsync();
 
             foreach (var item in items)
             {
                 await _context.OrderDetails.AddAsync(new OrderDetails()
                 {
                     Amount = item.Amount,
-                    MovieId = item.Movie.Id,
+                    MovieId = item.MovieId,
                     OrderId = order.Id,
                     Price = item.Movie.Price,
+                    IsActive = false
                 });
             }
 

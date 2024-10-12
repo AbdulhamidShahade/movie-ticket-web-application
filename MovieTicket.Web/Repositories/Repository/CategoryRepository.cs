@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Data;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Repositories.Base;

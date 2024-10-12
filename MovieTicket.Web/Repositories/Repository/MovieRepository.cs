@@ -38,9 +38,14 @@ namespace MovieTicket.Web.Repositories.Repository
                 StartDate = Convert.ToDateTime(createMovieVM.StartDate),
                 EndDate = Convert.ToDateTime(createMovieVM.EndDate),
                 CinemaId = createMovieVM.CinemaId,
+                Rating = createMovieVM.Rating,
+                Length = createMovieVM.Length,
+                PublishYear = createMovieVM.PublishYear,
+                CreatedAt = DateTime.UtcNow,
             };
 
             await _context.Movies.AddAsync(movieToCreate);
+            await _context.SaveChangesAsync();
 
             int movieId = await _context.Movies.Where(n => n.Name == createMovieVM.Name).Select(i => i.Id).FirstOrDefaultAsync();
 
@@ -49,7 +54,8 @@ namespace MovieTicket.Web.Repositories.Repository
                 await _context.MoviesActors.AddAsync(new MovieActor
                 {
                     ActorId = actorId,
-                    MovieId = movieId
+                    MovieId = movieId,
+                    CreatedAt = DateTime.UtcNow
                 });
             }
 
@@ -58,7 +64,8 @@ namespace MovieTicket.Web.Repositories.Repository
                 await _context.MoviesCategories.AddAsync(new MovieCategory
                 {
                     CategoryId = categoryId,
-                    MovieId = movieId
+                    MovieId = movieId,
+                    CreatedAt = DateTime.UtcNow
                 });
             }
 
@@ -67,7 +74,8 @@ namespace MovieTicket.Web.Repositories.Repository
                 await _context.MoviesProducers.AddAsync(new MovieProducer
                 {
                     ProducerId = producerId,
-                    MovieId = movieId
+                    MovieId = movieId,
+                    CreatedAt = DateTime.UtcNow
                 });
             }
 
@@ -76,7 +84,7 @@ namespace MovieTicket.Web.Repositories.Repository
 
         public async Task<bool> UpdateMovieAsync(UpdateMovieVM vm)
         {
-            var movie = await _context.Movies.Where(x => x.Id == vm.Id).FirstOrDefaultAsync();
+            var movie = await _context.Movies.AsNoTracking().Where(x => x.Id == vm.Id).FirstOrDefaultAsync();
 
             Movie movieToUpdate = new()
             {
@@ -88,11 +96,18 @@ namespace MovieTicket.Web.Repositories.Repository
                 StartDate = Convert.ToDateTime(vm.StartDate),
                 EndDate = Convert.ToDateTime(vm.EndDate),
                 UpdatedAt = DateTime.UtcNow,
-                CreatedAt = movie.CreatedAt
+                Length = vm.Length,
+                PublishYear = vm.PublishYear,
+                Rating = vm.Rating,
+                CreatedAt = vm.CreatedAt,
+                CinemaId = vm.CinemaId,
             };
             
             _context.Movies.Update(movieToUpdate);
+            await _context.SaveChangesAsync();
 
+            var actorsToRemove = await _context.MoviesActors.Where(m => m.MovieId == vm.Id).ToListAsync();
+            _context.MoviesActors.RemoveRange(actorsToRemove);
 
             foreach(int actorId in vm.ActorIds)
             {
@@ -100,24 +115,36 @@ namespace MovieTicket.Web.Repositories.Repository
                 {
                     ActorId = actorId,
                     MovieId = vm.Id,
+                    CreatedAt = DateTime.UtcNow
                 });
             }
+
+            var categoriesToRemove = await _context.MoviesCategories.Where(m => m.MovieId == vm.Id)
+                .ToListAsync();
+            _context.MoviesCategories.RemoveRange(categoriesToRemove);
 
             foreach(int categoryId in vm.CategoryIds)
             {
                 _context.MoviesCategories.Update(new MovieCategory
                 {
-                    MovieId = categoryId,
-                    CategoryId = vm.Id,
+                    MovieId = vm.Id,
+                    CategoryId = categoryId,
+                    CreatedAt = DateTime.UtcNow
                 });
             }
+
+
+            var producersToRemove = await _context.MoviesProducers.Where(m => m.MovieId == vm.Id)
+                .ToListAsync();
+            _context.MoviesProducers.RemoveRange(producersToRemove);
 
             foreach(int producerId in vm.ProducerIds)
             {
                 _context.MoviesProducers.Update(new MovieProducer
                 {
                     ProducerId = producerId,
-                    MovieId = vm.Id
+                    MovieId = vm.Id,
+                    CreatedAt = DateTime.UtcNow
                 });
             }
 
@@ -208,6 +235,36 @@ namespace MovieTicket.Web.Repositories.Repository
                 .CountAsync();
 
             return moviesCount; 
+        }
+
+        public Task<List<Movie>> GetMoviesAsync()
+        {
+            var movies = _context.Movies
+                .Include(mc => mc.MoviesCategories)
+                .ThenInclude(c => c.Category)
+                .Include(mp => mp.MoviesProducers)
+                .ThenInclude(p => p.Producer)
+                .Include(ma => ma.MoviesActors)
+                .ThenInclude(a => a.Actor)
+                .Include(c => c.Cinema)
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public Task<Movie> GetMovieByIdAsync(int id)
+        {
+            var movie = _context.Movies.Where(i => i.Id == id)
+                .Include(mc => mc.MoviesCategories)
+                .ThenInclude(c => c.Category)
+                .Include(mp => mp.MoviesProducers)
+                .ThenInclude(p => p.Producer)
+                .Include(ma => ma.MoviesActors)
+                .ThenInclude(a => a.Actor)
+                .Include(c => c.Cinema)
+                .FirstOrDefaultAsync();
+
+            return movie;
         }
     }
 }

@@ -54,6 +54,16 @@ namespace MovieTicketWebApplication.Repositories.Repository
 
                 if(newUserResponse.Succeeded)
                 {
+                    if(!await _roleManager.RoleExistsAsync("Admin"))
+                    {
+                        await _roleManager.CreateAsync(new ApplicationRole("Admin"));
+                        await _userManager.AddToRoleAsync(newUser, UserRoles.Admin);
+                    }
+                    if(!await _roleManager.RoleExistsAsync("User"))
+                    {
+                        await _roleManager.CreateAsync(new ApplicationRole("User"));
+                    }
+
                     await _userManager.AddToRoleAsync(newUser, UserRoles.User);
 
                     return true;
