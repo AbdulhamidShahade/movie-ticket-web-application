@@ -1,4 +1,5 @@
 ﻿using MovieTicket.Web.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieTicket.Web.Models
 {
@@ -9,6 +10,7 @@ namespace MovieTicket.Web.Models
         public string Nicename { get; set; }
         public string? Iso3 { get; set; }
         public int? NumCode { get; set; }
+
         public int? PhoneCode { get; set; }
         public string? PictureUrl { get; set; }
 
