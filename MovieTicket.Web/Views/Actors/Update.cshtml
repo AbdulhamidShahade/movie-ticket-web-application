@@ -1,5 +1,10 @@
 ﻿@model MovieTicket.Web.Models.ViewModels.ActorVM.UpdateActorVM
 
+@{
+    ViewData["Title"] = "Update Actor";
+}
+
+
 <head>
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -43,7 +48,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-category'></i>
+                                <i class='bx bxs-contact'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="LastName" />
@@ -58,7 +63,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-category'></i>
+                                <i class='bx bxs-contact'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="FirstName" />
@@ -88,7 +93,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-edit'></i>
+                                <i class='bx bx-time-five'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="BirthDate" type="date" />
@@ -103,12 +108,27 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-edit'></i>
+                                <i class='bx bx-image-add'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="PictureUrl" />
                     </div>
                     <span asp-validation-for="PictureUrl" class="text-danger"></span>
+                </div>
+
+                <div class="col-2">
+                    <label asp-for="CreatedAt" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bx-time-five'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="CreatedAt" />
+                    </div>
+                    <span asp-validation-for="CreatedAt" class="text-danger"></span>
                 </div>
 
                 <div class="col-2">
@@ -118,10 +138,10 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-id-card'></i>
+                                <i class='bx bx-flag'></i>
                             </span>
                         </div>
-                        <select class="form-control" asp-for="CountryId" asp-items="ViewBag.Countries"></select>"
+                        <select class="form-control" asp-for="CountryId" asp-items="ViewBag.Countries"></select>
                     </div>
                     <span asp-validation-for="CountryId" class="text-danger"></span>
                 </div>
@@ -131,14 +151,14 @@
                 </div>
 
                 <div class="col-5">
-                    <a asp-controller="Actors" asp-action="UserIndex" class="btn btn-outline-primary">Back To Actors</a>
+                    <a asp-controller="Actors" asp-action="Index" class="btn btn-outline-primary">Back To Actors</a>
                 </div>
 
             </div>
 
         </div>
     </form>
-    <script src="js/Actors/update.js"></script>
+    <script src="~/js/Actors/create.js"></script>
 </body>
 
 
