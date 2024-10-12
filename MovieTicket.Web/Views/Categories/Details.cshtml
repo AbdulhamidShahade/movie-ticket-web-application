@@ -1,10 +1,10 @@
-﻿@using MovieTicketWebApplication.Repositories.Queries.ADONet.CategoryQueries
+﻿@using MovieTicket.Web.Repositories.Queries.ADONet.MovieQueries
 @model MovieTicket.Web.Models.ViewModels.CategoryVM.ReadCategoryVM
 
-@inject CategoryMoviesDataProvider categoryQuery;
+@inject CategoryMoviesDataProvider categoriesQuery;
 
 @{
-    ViewData["Title"] = "Movie details";
+    ViewData["Title"] = "Category Details";
 }
 
 <head>
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="category-card">
-                    <div class="movie-card-header">
+                    <div class="category-card-header">
                         <h5 class="title">@Model.Name</h5>
                     </div>
                     <div class="row">
@@ -29,13 +29,33 @@
                                 <p class="card-text  ">
                                     <b>Movies: </b>
                                     <div class="movie-list d-flex">
-                                        @foreach (var category in categoryQuery.GetMoviesByCategoryId(@Model.Id, 4))
+                                        @foreach (var category in categoriesQuery.GetMoviesByCategoryId(@Model.Id, 4))
                                         {
                                             <div class="movie-profile">
                                                 <img src="@category.PictureUrl" />
                                                 <a asp-controller="Movies" asp-action="Details" asp-route-id="@category.Id">@category.Name</a>
                                             </div>
                                         }
+                                    </div>
+
+                                    <div>
+                                        <a class="toggle-collapse" data-bs-toggle="collapse" href="#actorsCollapse" role="button" aria-expanded="false" aria-controls="actorsCollapse">
+                                            <i class="bi bi-caret-down-fill"></i> Show All
+                                        </a>
+                                        <div class="collapse" id="actorsCollapse">
+                                            <div class="movie-list row mt-3">
+                                                @foreach (var movie in categoriesQuery.GetMoviesByCategoryId(Model.Id, 100))
+                                                {
+                                                    <div class="col-6 col-md-3 col-lg-2-4 mb-4 d-flex justify-content-center">
+                                                        <div class="movie-profile text-center">
+                                                            <img class="img-fluid rounded-circle mb-2 img-test" src="@movie.PictureUrl" alt="@movie.Name's picture" />
+                                                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Name</a>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </p>
                                 <hr />

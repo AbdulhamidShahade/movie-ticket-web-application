@@ -1,5 +1,10 @@
 ﻿@model List<MovieTicket.Web.Models.ViewModels.CategoryVM.ReadCategoryVM>
 
+
+@{
+    ViewData["Title"] = "Category List";
+}
+
 <head>
     <link href="@Url.Content("~/css/Categories/userIndex.css")" rel="stylesheet" type="text/css" />
 </head>
@@ -7,7 +12,7 @@
 <body>
     <div class="container">
         <div class="main-title" style="padding-bottom:10px;">
-            <h1>Cinemas</h1>
+            <h1 class="mb-3">Categories</h1>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var category in Model)
@@ -19,7 +24,7 @@
                             <h5 class="text-center">@category.Name</h5>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">@category.Description</li>
+                            <li class="list-group-item"><strong>Description: </strong>@category.Description</li>
                         </ul>
                     </div>
                 </div>

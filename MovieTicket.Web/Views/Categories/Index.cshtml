@@ -2,6 +2,22 @@
 
 @{
     ViewData["Navbar"] = true;
+    ViewData["Title"] = "Category List";
+}
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Failed"]
+    </div>
 }
 
 <head>
@@ -44,4 +60,4 @@
     <script src="js/Categories/index.js"></script>
 </body>
 
-@await Html.PartialAsync("_CreateItem", "Categories");
+@await Html.PartialAsync("_CreateItem", "Categories")
