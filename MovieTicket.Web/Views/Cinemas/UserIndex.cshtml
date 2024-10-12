@@ -1,5 +1,9 @@
 ﻿@model List<MovieTicket.Web.Models.ViewModels.CinemaVM.ReadCinemaVM>
 
+@{
+    ViewData["Title"] = "Cinema List";
+}
+
 <head>
     <link href="@Url.Content("~/css/Cinemas/userIndex.css")" rel="stylesheet" type="text/css" />
 </head>
@@ -7,19 +11,19 @@
 <body>
     <div class="container">
         <div class="main-title" style="padding-bottom:10px;">
-            <h1>Cinemas</h1>
+            <h1 class="mb-3">Cinemas</h1>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var cinema in Model)
             {
                 <div class="col">
                     <div class="card h-100">
-                        <a asp-controller="Cinemas" asp-action="MoviesByCinema" asp-route-id="@cinema.Id"><img src="@cinema.Logo" class="card-img-top" alt="@cinema.Name"></a>
+                        <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@cinema.Id"><img src="@cinema.Logo" class="card-img-top" alt="@cinema.Name"></a>
                         <div class="card-header">
                             <h5 class="text-center">@cinema.Name</h5>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">@cinema.Description</li>
+                            <li class="list-group-item"><strong>Description: </strong>@cinema.Description</li>
                         </ul>
                     </div>
                 </div>

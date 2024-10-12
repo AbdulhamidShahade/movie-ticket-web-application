@@ -1,5 +1,9 @@
 ﻿@model MovieTicket.Web.Models.ViewModels.CinemaVM.UpdateCinemaVM
 
+@{
+    ViewData["Title"] = "Update Cinema";
+}
+
 <head>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="@Url.Content("~/css/Cinemas/update.css")" rel="stylesheet" type="text/css" />
@@ -42,12 +46,29 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-category'></i>
+                                <i class='bx bxs-contact'></i>
                             </span>
                         </div>
                         <input class="form-control" asp-for="Name" />
                     </div>
                     <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                
+
+                <div class="col-2">
+                    <label asp-for="Logo" class="control-label" style="font-size:1.3rem"></label>
+                </div>
+                <div class="col-10 pb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class='bx bx-image-add'></i>
+                            </span>
+                        </div>
+                        <input class="form-control" asp-for="Logo" />
+                    </div>
+                    <span asp-validation-for="Logo" class="text-danger"></span>
                 </div>
 
                 <div class="col-2">
@@ -60,24 +81,24 @@
                                 <i class='bx bx-edit'></i>
                             </span>
                         </div>
-                        <input class="form-control" asp-for="Description" />
+                        <textarea class="form-control" asp-for="Description"></textarea>
                     </div>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
                 <div class="col-2">
-                    <label asp-for="Logo" class="control-label" style="font-size:1.3rem"></label>
+                    <label asp-for="CreatedAt" class="control-label" style="font-size:1.3rem"></label>
                 </div>
                 <div class="col-10 pb-3">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class='bx bx-edit'></i>
+                                <i class='bx bx-time-five'></i>
                             </span>
                         </div>
-                        <input class="form-control" asp-for="Logo" />
+                        <input class="form-control" asp-for="CreatedAt" />
                     </div>
-                    <span asp-validation-for="Logo" class="text-danger"></span>
+                    <span asp-validation-for="CreatedAt" class="text-danger"></span>
                 </div>
 
                 <div class="col-5 offset-2">
@@ -85,7 +106,7 @@
                 </div>
 
                 <div class="col-5">
-                    <a asp-controller="Categories" asp-action="UserIndex" class="btn btn-outline-primary">Back To Cinemas</a>
+                    <a asp-controller="Cinemas" asp-action="Index" class="btn btn-outline-primary">Back To Cinemas</a>
                 </div>
 
             </div>
