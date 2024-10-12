@@ -2,6 +2,6 @@
 {
     public class DeleteMovieVM : UpdateMovieVM
     {
-        public DateOnly CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
