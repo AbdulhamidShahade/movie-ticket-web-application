@@ -1,21 +1,22 @@
-﻿//using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MovieTicket.Web.Models;
 
 
-//namespace MovieTicket.Web.Data.Components
-//{
-//    public class ShoppingCartSummary : ViewComponent
-//    {
-//        private readonly ShoppingCart _shoppingCart;
-//        public ShoppingCartSummary(ShoppingCart shoppingCart)
-//        {
-//            _shoppingCart = shoppingCart;
-//        }
+namespace MovieTicket.Web.Data.Components
+{
+    public class ShoppingCartSummary : ViewComponent
+    {
+        private readonly ShoppingCart _shoppingCart;
+        public ShoppingCartSummary(ShoppingCart shoppingCart)
+        {
+            _shoppingCart = shoppingCart;
+        }
 
-//        public async Task<IViewComponentResult> Invoke()
-//        {
-//            var items = await _shoppingCart.GetAllShoppingCartItemsAsync();
+        public IViewComponentResult Invoke()
+        {
+            var items = _shoppingCart.GetAllShoppingCartItems();
 
-//            return View(items.Count);
-//        }
-//    }
-//}
+            return View(items.Count);
+        }
+    }
+}

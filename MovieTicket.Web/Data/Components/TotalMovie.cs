@@ -16,7 +16,7 @@ namespace MovieTicket.Web.Data.Components
         {
             var moviesCount = _movieRepository.GetMoviesByCategoryId(categoryId);
 
-            return View(moviesCount);
+            return View(moviesCount.Count());
         }
     }
 }
