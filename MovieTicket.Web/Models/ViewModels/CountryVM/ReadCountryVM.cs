@@ -1,4 +1,6 @@
-﻿namespace MovieTicket.Web.Models.ViewModels.CountryVM
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MovieTicket.Web.Models.ViewModels.CountryVM
 {
     public class ReadCountryVM
     {
@@ -10,6 +12,6 @@
         public int? NumCode { get; set; }
         public int? PhoneCode { get; set; }
         public string? PictureUrl { get; set; }
-        public DateOnly CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
