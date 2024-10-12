@@ -14,126 +14,40 @@ namespace MovieTicket.Web.Data.AutoMapper
         public MappingConfig()
         {
             CreateMap<Category, CreateCategoryVM>().ReverseMap();
-
-            CreateMap<Category, UpdateCategoryVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Category, ReadCategoryVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Category, DeleteCategoryVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
+            CreateMap<Category, UpdateCategoryVM>().ReverseMap();
+            CreateMap<Category, ReadCategoryVM>().ReverseMap();
+            CreateMap<Category, DeleteCategoryVM>().ReverseMap();
 
 
-            CreateMap<Cinema, ReadCinemaVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Cinema, UpdateCinemaVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Cinema, DeleteCinemaVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
+            CreateMap<Cinema, ReadCinemaVM>().ReverseMap();
+            CreateMap<Cinema, UpdateCinemaVM>().ReverseMap();
+            CreateMap<Cinema, DeleteCinemaVM>().ReverseMap();
             CreateMap<Cinema, CreateCinemaVM>().ReverseMap();
 
 
-            CreateMap<Actor, ReadActorVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => DateOnly.FromDateTime(s.BirthDate)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Actor, UpdateActorVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => DateOnly.FromDateTime(s.BirthDate)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Actor, DeleteActorVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => DateOnly.FromDateTime(s.BirthDate)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
+            CreateMap<Actor, ReadActorVM>().ReverseMap();
+            CreateMap<Actor, UpdateActorVM>().ReverseMap();
+            CreateMap<Actor, DeleteActorVM>().ReverseMap();
             CreateMap<Actor, CreateActorVM>().ReverseMap();
 
 
-            CreateMap<Producer, ReadProducerVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => DateOnly.FromDateTime(s.BirthDate)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Producer, UpdateProducerVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => DateOnly.FromDateTime(s.BirthDate)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-            CreateMap<Producer, DeleteProducerVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => DateOnly.FromDateTime(s.BirthDate)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)))
-                .ForMember(b => b.BirthDate, b => b.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
+            CreateMap<Producer, ReadProducerVM>().ReverseMap();
+            CreateMap<Producer, UpdateProducerVM>().ReverseMap();
+            CreateMap<Producer, DeleteProducerVM>().ReverseMap();
             CreateMap<Producer, CreateProducerVM>().ReverseMap();
 
 
-            CreateMap<Movie, ReadMovieVM>()
-                .ForMember(s => s.StartDate, x => x.MapFrom(d => DateOnly.FromDateTime(d.StartDate)))
-                .ForMember(s => s.EndDate, x => x.MapFrom(d => DateOnly.FromDateTime(d.EndDate)))
-                .ForMember(s => s.CreatedAt, x => x.MapFrom(d => DateOnly.FromDateTime(d.CreatedAt)))
-                .ReverseMap()
-                .ForMember(s => s.StartDate, x => x.MapFrom(d => Convert.ToDateTime(d.StartDate)))
-                .ForMember(s => s.EndDate, x => x.MapFrom(d => Convert.ToDateTime(d.EndDate)))
-                .ForMember(s => s.CreatedAt, x => x.MapFrom(d => Convert.ToDateTime(d.CreatedAt)));
-
-            CreateMap<Movie, DeleteMovieVM>()
-                .ForMember(s => s.StartDate, x => x.MapFrom(d => DateOnly.FromDateTime(d.StartDate)))
-                .ForMember(s => s.EndDate, x => x.MapFrom(d => DateOnly.FromDateTime(d.EndDate)))
-                .ForMember(s => s.CreatedAt, x => x.MapFrom(d => DateOnly.FromDateTime(d.CreatedAt)))
-                .ReverseMap()
-                .ForMember(s => s.StartDate, x => x.MapFrom(d => Convert.ToDateTime(d.StartDate)))
-                .ForMember(s => s.EndDate, x => x.MapFrom(d => Convert.ToDateTime(d.EndDate)))
-                .ForMember(s => s.CreatedAt, x => x.MapFrom(d => Convert.ToDateTime(d.CreatedAt)));
+            CreateMap<Movie, ReadMovieVM>().ReverseMap();
+            CreateMap<Movie, DeleteMovieVM>().ReverseMap();
+            CreateMap<Movie, UpdateMovieVM>().ReverseMap();
 
 
-            CreateMap<Country, ReadCountryVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
 
 
-            CreateMap<Country, CreateCountryVM>();
-
-            CreateMap<Country, UpdateCountryVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
-
-
-            CreateMap<Country, DeleteCountryVM>()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => DateOnly.FromDateTime(s.CreatedAt)))
-                .ReverseMap()
-                .ForMember(d => d.CreatedAt, d => d.MapFrom(s => Convert.ToDateTime(s.CreatedAt)));
+            CreateMap<Country, ReadCountryVM>().ReverseMap();
+            CreateMap<Country, CreateCountryVM>().ReverseMap();
+            CreateMap<Country, UpdateCountryVM>().ReverseMap();
+            CreateMap<Country, DeleteCountryVM>().ReverseMap();    
         }
     }
 }
