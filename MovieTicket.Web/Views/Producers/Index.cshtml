@@ -2,6 +2,21 @@
 
 @{
     ViewData["Navbar"] = true;
+    ViewData["Title"] = "Producer List";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Failed"]
+    </div>
 }
 
 <head>
@@ -11,7 +26,7 @@
 
 <body>
     <div class="container mt-4">
-        <h4 class="pb-3">Actors</h4>
+        <h4 class="pb-3">Producers</h4>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -21,6 +36,7 @@
                         <th>Last Name</th>
                         <th>Birth Date</th>
                         <th>Bio</th>
+                        <th>CreatedAt</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -34,6 +50,7 @@
                             <td>@item.LastName</td>
                             <td>@item.BirthDate</td>
                             <td>@item.Bio</td>
+                            <td>@item.CreatedAt</td>
                             <td>
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm" style="margin-right:0.3rem;">Details</a>
                                 <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning btn-sm" style="margin-right:0.3rem;">Update</a>
