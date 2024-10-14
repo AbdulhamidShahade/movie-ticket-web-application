@@ -23,7 +23,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("MySQL"), new MySqlServerVersion(new Version(10, 4, 30)));
+    options.UseMySql(builder.Configuration.GetConnectionString("MySQL"), new MySqlServerVersion(new Version(10, 4, 30)),mysqlOptions =>
+        {
+            mysqlOptions.EnableRetryOnFailure();
+        });
 });
 
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
