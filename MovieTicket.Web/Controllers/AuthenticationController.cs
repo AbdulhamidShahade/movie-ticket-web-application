@@ -39,7 +39,6 @@ namespace MovieTicketWebApplication.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Register()
         {
@@ -68,10 +67,5 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Logout successfully!");
             return RedirectToAction("Index", "Home");
         }
-
-        //public IActionResult AccessDenied(string returnUrl)
-        //{
-        //    return View();
-        //}
     }
 }

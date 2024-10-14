@@ -47,8 +47,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(categoryViewModel);
         }
 
-        
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -72,7 +70,6 @@ namespace MovieTicketWebApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
@@ -87,7 +84,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(categoryViewModel);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Update([FromForm] UpdateCategoryVM viewModel)
@@ -105,7 +101,6 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Category updated successfully");
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
@@ -139,7 +134,6 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Category deleted successfully");
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> CategoriesByMovie(int movieId)

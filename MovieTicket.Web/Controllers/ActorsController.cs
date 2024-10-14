@@ -21,7 +21,6 @@ namespace MovieTicketWebApplication.Controllers
             _countryRepository = countryRepository;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -36,7 +35,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(actorsViewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
@@ -53,14 +51,12 @@ namespace MovieTicketWebApplication.Controllers
             return View(actorViewModel);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             ViewBag.Countries = new SelectList(await _countryRepository.GetAllAsync(), "Id", "Name");
             return View(new CreateActorVM());
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateActorVM viewModel)
@@ -79,7 +75,6 @@ namespace MovieTicketWebApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
@@ -96,7 +91,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(viewModel);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Update([FromForm] UpdateActorVM viewModel)
@@ -115,7 +109,6 @@ namespace MovieTicketWebApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -133,7 +126,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Delete([FromForm] DeleteActorVM viewModel)
         {
@@ -150,7 +142,6 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Actor deleted successfully");
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> UserIndex()

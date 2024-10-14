@@ -19,7 +19,6 @@ namespace MovieTicketWebApplication.Controllers
             _movieRepository = movieRepository;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -30,7 +29,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(moviesViewModel);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -40,7 +38,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(movieViewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -65,7 +62,6 @@ namespace MovieTicketWebApplication.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateMovieVM viewModel)
         {
@@ -80,7 +76,6 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Movie created successfully");
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Update(int id)
@@ -127,7 +122,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(response);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Update([FromForm] UpdateMovieVM viewModel)
         {
@@ -142,7 +136,6 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Movie updated successfully");
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
@@ -168,7 +161,6 @@ namespace MovieTicketWebApplication.Controllers
                 CreatedAt = movieModel.CreatedAt
             };
 
-
             var movieDropdownLists = await _movieRepository.GetMovieDropDownLists();
 
             ViewBag.Actors = new SelectList(movieDropdownLists.Actors.Select(t => new
@@ -190,7 +182,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(response);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Delete([FromForm] DeleteMovieVM viewModel)
         {
@@ -208,7 +199,6 @@ namespace MovieTicketWebApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> MoviesByActor(int id)
         {
@@ -224,7 +214,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(moviesViewModel);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> MoviesByCategory(int categoryId)
         {
@@ -239,7 +228,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(moviesViewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> MoviesByProducer(int id)
@@ -270,7 +258,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(moviesViewModel);
         }
-
 
         public async Task<IActionResult> Filter(string searchString)
         {

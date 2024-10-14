@@ -47,9 +47,9 @@ namespace MovieTicketWebApplication.Controllers
         {
             var model = _mapper.Map<Country>(viewModel);
 
-            var toAdd = await _countryRepository.CreateAsync(model);
+            var isCreated = await _countryRepository.CreateAsync(model);
 
-            if (!toAdd)
+            if (!isCreated)
             {
                 NotificationHalper.SetNotification(this, "Failed", "Failed to create country!");
                 return RedirectToAction(nameof(Index));
@@ -86,7 +86,6 @@ namespace MovieTicketWebApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -96,15 +95,14 @@ namespace MovieTicketWebApplication.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Delete(DeleteCountryVM viewModel)
         {
             var model = _mapper.Map<Country>(viewModel);
 
-            var toDelete = await _countryRepository.DeleteAsync(model);
+            var isDeleted = await _countryRepository.DeleteAsync(model);
 
-            if (!toDelete)
+            if (!isDeleted)
             {
                 NotificationHalper.SetNotification(this, "Failed", "Failed to delete country!");
                 return RedirectToAction(nameof(Index));
@@ -113,7 +111,6 @@ namespace MovieTicketWebApplication.Controllers
             NotificationHalper.SetNotification(this, "Success", "Country deleted successfully!");
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         public async Task<IActionResult> UserIndex()
@@ -124,7 +121,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(countriesViewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> CountryByActor(int actorId)
@@ -140,7 +136,6 @@ namespace MovieTicketWebApplication.Controllers
 
             return View(countryViewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> CountryByProducer(int producerId)

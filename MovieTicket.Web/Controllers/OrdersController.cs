@@ -33,7 +33,6 @@ namespace MovieTicketWebApplication.Controllers
             return View(orders);
         }
 
-
         public async Task<IActionResult> ShoppingCart()
         {
             var items = await _shoppingCart.GetAllShoppingCartItemsAsync();
