@@ -1,7 +1,5 @@
 ﻿@using MovieTicket.Web.Repositories.Queries.ADONet.MovieQueries
 
-
-
 @model MovieTicket.Web.Models.ViewModels.ProducerVM.ReadProducerVM
 
 @inject ProducerMoviesDataProvider producerQuery;
@@ -33,7 +31,7 @@
                                 <p class="card-text  ">
                                     <b>Movies: </b>
                                     <div class="movie-list d-flex">
-                                        @foreach (var movie in producerQuery.GetMoviesByProducerId(@Model.Id, 3))
+                                        @foreach (var movie in producerQuery.GetMoviesByProducerId(@Model.Id, 3, "MYSQL"))
                                         {
                                             <div class="movie-profile">
                                                 <img src="@movie.PictureUrl" />
@@ -48,7 +46,7 @@
                                         </a>
                                         <div class="collapse" id="actorsCollapse">
                                             <div class="list d-flex flex-wrap mt-2">
-                                                @foreach (var actor in producerQuery.GetMoviesByProducerId(Model.Id, 100))
+                                                @foreach (var actor in producerQuery.GetMoviesByProducerId(Model.Id, 100, "MYSQL"))
                                                 {
                                                     <div class="movie-profile">
                                                         <img src="@actor.PictureUrl" />
