@@ -30,7 +30,7 @@
                                     <b>Movies: </b>
 
                                     <div class="movie-list d-flex">
-                                        @foreach (var movie in actorsQuery.GetMoviesByActorId(@Model.Id, 5))
+                                        @foreach (var movie in actorsQuery.GetMoviesByActorId(@Model.Id, 5, "MYSQL"))
                                         {
                                             <div class="movie-profile">
                                                 <img src="@movie.PictureUrl" />
@@ -45,7 +45,7 @@
                                         </a>
                                         <div class="collapse" id="actorsCollapse">
                                             <div class="list d-flex flex-wrap mt-2">
-                                                @foreach (var movie in actorsQuery.GetMoviesByActorId(Model.Id, 100))
+                                                @foreach (var movie in actorsQuery.GetMoviesByActorId(Model.Id, 100, "MYSQL"))
                                                 {
                                                     <div class="movie-profile">
                                                         <img src="@movie.PictureUrl" />
