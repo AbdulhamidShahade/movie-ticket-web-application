@@ -1,47 +1,89 @@
 ﻿using MovieTicket.Web.Models.ViewModels.MovieVM;
 using MovieTicket.Web.Settings;
+using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
 
 namespace MovieTicketWebApplication.Repositories.Queries.ADONet.ActorQueries
 {
     public class ActorMoviesDataProvider
     {
-        public List<ReadMovieVM> GetMoviesByActorId(int actorId, int quantity)
+        public List<ReadMovieVM> GetMoviesByActorId(int actorId, int quantity, string Provider)
         {
             List<ReadMovieVM> movies = new List<ReadMovieVM>();
-            SqlConnection conn = new SqlConnection(Global.ConnectionString);
-            string query = $"SELECT top {quantity} * from Movies m inner join MoviesActors ma on (m.id = ma.movieId) where ma.actorId = @actorId";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@actorId", actorId);
-            try
+
+            if(Provider == "SQL")
             {
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                SqlConnection conn = new SqlConnection(Global.ConnectionString);
+                string query = $"SELECT top {quantity} * from Movies m inner join MoviesActors ma on (m.id = ma.movieId) where ma.actorId = @actorId";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@actorId", actorId);
+                try
                 {
-                    movies.Add(new ReadMovieVM
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        Id = Convert.ToInt16(reader["Id"]),
-                        Name = Convert.ToString(reader["Name"]),
-                        Description = Convert.ToString(reader["Description"]),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        Length = Convert.ToInt16(reader["Length"]),
-                        PictureUrl = Convert.ToString(reader["PictureUrl"]),
-                        StartDate = Convert.ToDateTime(reader["StartDate"]),
-                        EndDate = Convert.ToDateTime(reader["EndDate"])
-                    });
+                        movies.Add(new ReadMovieVM
+                        {
+                            Id = Convert.ToInt16(reader["Id"]),
+                            Name = Convert.ToString(reader["Name"]),
+                            Description = Convert.ToString(reader["Description"]),
+                            Price = Convert.ToDecimal(reader["Price"]),
+                            Length = Convert.ToInt16(reader["Length"]),
+                            PictureUrl = Convert.ToString(reader["PictureUrl"]),
+                            StartDate = Convert.ToDateTime(reader["StartDate"]),
+                            EndDate = Convert.ToDateTime(reader["EndDate"])
+                        });
+                    }
+                    reader.Close();
+                    conn.Close();
                 }
-                reader.Close();
-                conn.Close();
+                catch (Exception ex)
+                {
+                    conn.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                conn.Close();
+                MySqlConnection conn = new MySqlConnection(Global.ConnectionString);
+                string query = $"SELECT * from Movies m inner join MoviesActors ma on(m.Id = ma.MovieId) where ActorId = @actorId LIMIT {quantity}";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@actorId", actorId);
+                try
+                {
+                    conn.Open();
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        movies.Add(new ReadMovieVM
+                        {
+                            Id = Convert.ToInt16(reader["Id"]),
+                            Name = Convert.ToString(reader["Name"]),
+                            Description = Convert.ToString(reader["Description"]),
+                            Price = Convert.ToDecimal(reader["Price"]),
+                            Length = Convert.ToInt16(reader["Length"]),
+                            PictureUrl = Convert.ToString(reader["PictureUrl"]),
+                            StartDate = Convert.ToDateTime(reader["StartDate"]),
+                            EndDate = Convert.ToDateTime(reader["EndDate"])
+                        });
+                    }
+                    reader.Close();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
-            finally
-            {
-                conn.Close();
-            }
+            
             return movies;
         }
     }
