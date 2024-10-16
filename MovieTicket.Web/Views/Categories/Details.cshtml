@@ -29,7 +29,7 @@
                                 <p class="card-text  ">
                                     <b>Movies: </b>
                                     <div class="movie-list d-flex">
-                                        @foreach (var category in categoriesQuery.GetMoviesByCategoryId(@Model.Id, 4))
+                                        @foreach (var category in categoriesQuery.GetMoviesByCategoryId(@Model.Id, 4, "MYSQL"))
                                         {
                                             <div class="movie-profile">
                                                 <img src="@category.PictureUrl" />
@@ -44,7 +44,7 @@
                                         </a>
                                         <div class="collapse" id="actorsCollapse">
                                             <div class="movie-list row mt-3">
-                                                @foreach (var movie in categoriesQuery.GetMoviesByCategoryId(Model.Id, 100))
+                                                @foreach (var movie in categoriesQuery.GetMoviesByCategoryId(Model.Id, 100, "MYSQL"))
                                                 {
                                                     <div class="col-6 col-md-3 col-lg-2-4 mb-4 d-flex justify-content-center">
                                                         <div class="movie-profile text-center">
