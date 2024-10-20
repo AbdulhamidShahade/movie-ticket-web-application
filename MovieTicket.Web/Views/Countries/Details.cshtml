@@ -34,7 +34,7 @@
                                     <b>Actors: </b>
 
                                     <div class="actor-list d-flex">
-                                        @foreach (var actor in actorsQuery.GetActorsByCountryId(@Model.Id, 5, "MYSQL"))
+                                        @foreach (var actor in actorsQuery.GetActorsByCountryId(@Model.Id, 5))
                                         {
                                             <div class="actor-profile">
                                                 <img src="@actor.PictureUrl" />
@@ -49,7 +49,7 @@
                                         </a>
                                         <div class="collapse" id="actorsCollapse">
                                             <div class="actor-list row mt-3">
-                                                @foreach (var actor in actorsQuery.GetActorsByCountryId(Model.Id, 100, "MYSQL"))
+                                                @foreach (var actor in actorsQuery.GetActorsByCountryId(Model.Id, 100))
                                                 {
                                                     <div class="col-6 col-md-3 col-lg-2-4 mb-4 d-flex justify-content-center">
                                                         <div class="actor-profile text-center">

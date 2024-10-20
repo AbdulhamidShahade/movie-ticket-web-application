@@ -84,7 +84,7 @@
                                 <p class="card-text">
                                     <b>Producers: </b>
                                     <div class="list d-flex">
-                                        @foreach (var producer in producersQuery.GetProducersByMovieId(@Model.Id, 5, "MYSQL"))
+                                        @foreach (var producer in producersQuery.GetProducersByMovieId(@Model.Id, 5))
                                         {
                                             <div class="profile">
                                                 <img src="@producer.PictureUrl" />
@@ -99,7 +99,7 @@
                                         </a>
                                         <div class="collapse" id="producersCollapse">
                                             <div class="list d-flex flex-wrap mt-2">
-                                                @foreach (var producer in producersQuery.GetProducersByMovieId(@Model.Id, 100, "MYSQL"))
+                                                @foreach (var producer in producersQuery.GetProducersByMovieId(@Model.Id, 100))
                                                 {
                                                     <div class="profile">
                                                         <img src="@producer.PictureUrl" />
@@ -114,7 +114,7 @@
                                 <p class="card-text">
                                     <b>Actors: </b>
                                     <div class="list d-flex">
-                                        @foreach (var actor in actorsQuery.GetActorsByMovieId(Model.Id, 5, "MYSQL"))
+                                        @foreach (var actor in actorsQuery.GetActorsByMovieId(Model.Id, 5))
                                         {
                                             <div class="profile ">
                                                 <img src="@actor.PictureUrl" />
@@ -130,7 +130,7 @@
                                         </a>
                                         <div class="collapse" id="actorsCollapse">
                                             <div class="list d-flex flex-wrap mt-2">
-                                                @foreach (var actor in actorsQuery.GetActorsByMovieId(Model.Id, 100, "MYSQL"))
+                                                @foreach (var actor in actorsQuery.GetActorsByMovieId(Model.Id, 100))
                                                 {
                                                     <div class="profile">
                                                         <img src="@actor.PictureUrl" />

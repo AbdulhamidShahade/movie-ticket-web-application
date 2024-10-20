@@ -30,7 +30,7 @@
                                 <p class="card-text  ">
                                     <b>Movies: </b>
                                     <div class="movie-list d-flex">
-                                        @foreach (var movie in cinemasQuery.GetMoviesByCinemaId(Model.Id, 5, "MYSQL"))
+                                        @foreach (var movie in cinemasQuery.GetMoviesByCinemaId(Model.Id, 5))
                                         {
                                             <div class="movie-profile ">
                                                 <img src="@movie.PictureUrl" />
@@ -44,7 +44,7 @@
                                         </a>
                                         <div class="collapse" id="actorsCollapse">
                                             <div class="list d-flex flex-wrap mt-2">
-                                                @foreach (var movie in cinemasQuery.GetMoviesByCinemaId(Model.Id, 100, "MYSQL"))
+                                                @foreach (var movie in cinemasQuery.GetMoviesByCinemaId(Model.Id, 100))
                                                 {
                                                     <div class="movie-profile">
                                                         <img src="@movie.PictureUrl" />
@@ -65,6 +65,3 @@
     </div>
     <script src="~/js/Cinemas/details.js"></script>
 </body>
-
-
-
