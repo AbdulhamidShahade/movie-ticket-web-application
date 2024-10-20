@@ -94,8 +94,6 @@ namespace MovieTicket.Web.Data
                 .WithOne(c => c.Country)
                 .HasForeignKey(fk => fk.CountryId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieTicket.Web.Models;
 
-
 namespace MovieTicket.Web.Data.Components
 {
     public class ShoppingCartSummary : ViewComponent
