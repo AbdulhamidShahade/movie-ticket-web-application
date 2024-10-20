@@ -1,11 +1,9 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Data;
 using MovieTicket.Web.Data.Statics;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Repositories.Base;
 using MovieTicket.Web.Repositories.IRepository;
-using System.Runtime.InteropServices;
 
 namespace MovieTicket.Web.Repositories.Repository
 {

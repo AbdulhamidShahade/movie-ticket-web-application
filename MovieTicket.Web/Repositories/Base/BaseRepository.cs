@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Models.Base;

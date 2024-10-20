@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieTicket.Web.Models;
 
-
 namespace MovieTicket.Web.Repositories.IRepository
 {
     public class UserRepository : IUserRepository

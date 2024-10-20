@@ -1,6 +1,4 @@
-﻿
-
-using MovieTicket.Web.Models;
+﻿using MovieTicket.Web.Models;
 
 namespace MovieTicket.Web.Repositories.IRepository
 {
