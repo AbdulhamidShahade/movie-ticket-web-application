@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MovieTicket.Web.Models;
 
 namespace MovieTicket.Web.Models.ModelValidations
 {
