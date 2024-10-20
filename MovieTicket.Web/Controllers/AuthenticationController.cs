@@ -4,7 +4,6 @@ using MovieTicket.Models.ViewModels.AuthenticationVM;
 using MovieTicket.Web.Helpers;
 using MovieTicket.Web.Repositories.IRepository;
 
-
 namespace MovieTicketWebApplication.Controllers
 {
     public class AuthenticationController : Controller

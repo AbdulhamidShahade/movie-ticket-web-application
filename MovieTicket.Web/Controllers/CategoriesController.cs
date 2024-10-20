@@ -4,6 +4,7 @@ using MovieTicket.Web.Helpers;
 using MovieTicket.Web.Models;
 using MovieTicket.Web.Models.ViewModels.CategoryVM;
 using MovieTicket.Web.Repositories.IRepository;
+
 namespace MovieTicketWebApplication.Controllers
 {
     public class CategoriesController : Controller
